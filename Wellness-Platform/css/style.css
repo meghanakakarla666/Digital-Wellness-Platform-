@@ -42,10 +42,11 @@ body {
 
 /* Hero Section */
 .hero {
-    background: var(--health-gradient);
+    background: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);
     color: white;
     position: relative;
     overflow: hidden;
+    padding: 100px 0;
 }
 
 .hero::before {
@@ -57,6 +58,13 @@ body {
     bottom: 0;
     background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><circle cx="200" cy="200" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="800" cy="300" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="400" cy="600" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="700" cy="800" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
     animation: float 20s ease-in-out infinite;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 2;
 }
 
 @keyframes float {
@@ -134,8 +142,30 @@ body {
 }
 
 /* Navigation */
+.navbar {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #f8f9ff 0%, #e8eeff 100%) !important;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+    backdrop-filter: blur(10px);
+}
+
 .navbar-brand {
     font-weight: 700;
+    color: var(--primary-color) !important;
+    font-size: 1.4rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Navigation links styling */
+.navbar-nav .nav-link {
+    color: var(--text-color) !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
     color: var(--primary-color) !important;
 }
 
@@ -216,6 +246,47 @@ body {
     transform: scale(1.05);
 }
 
+/* Section Headers - Increased Sizes */
+section h2 {
+    font-size: 3.5rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 1.5rem !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    line-height: 1.2;
+}
+
+#features h2,
+.py-5 h2 {
+    font-size: 4rem !important;
+    font-weight: 800 !important;
+    color: var(--primary-color);
+    margin-bottom: 2rem !important;
+}
+
+/* Benefits Section Header */
+#benefits h2 {
+    font-size: 3.8rem !important;
+    font-weight: 750 !important;
+    background: var(--health-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Testimonials Section Header */
+.bg-light h2 {
+    font-size: 3.6rem !important;
+    font-weight: 700 !important;
+    color: var(--secondary-color);
+}
+
+/* Call to Action Section Header */
+.bg-primary h2 {
+    font-size: 4.2rem !important;
+    font-weight: 800 !important;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
     .hero h1 {
@@ -233,6 +304,28 @@ body {
     
     .dashboard-preview {
         margin-top: 2rem;
+    }
+    
+    /* Mobile section headers */
+    section h2 {
+        font-size: 2.5rem !important;
+    }
+    
+    #features h2,
+    .py-5 h2 {
+        font-size: 2.8rem !important;
+    }
+    
+    #benefits h2 {
+        font-size: 2.6rem !important;
+    }
+    
+    .bg-light h2 {
+        font-size: 2.4rem !important;
+    }
+    
+    .bg-primary h2 {
+        font-size: 2.9rem !important;
     }
 }
 

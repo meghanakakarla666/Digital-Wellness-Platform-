@@ -7,6 +7,7 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/dashboard.css" rel="stylesheet">
+    <link href="../css/dashboard-enhanced.css" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
@@ -36,10 +37,13 @@
                         </div>
                         <div class="col-md-4 text-end">
                             <button class="btn btn-health" onclick="exportResults()">
-                                📄 Export Report
+                                📄 Export CSV
                             </button>
                             <button class="btn btn-outline-primary ms-2" onclick="printResults()">
                                 🖨️ Print
+                            </button>
+                            <button class="btn btn-outline-success ms-2" onclick="shareResults()">
+                                📤 Share
                             </button>
                         </div>
                     </div>
@@ -193,6 +197,7 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/chart.min.js"></script>
     <script src="../js/health-calculator.js"></script>
+    <script src="../js/export-utils.js"></script>
     <script src="../js/dashboard.js"></script>
 </body>
 </html>
