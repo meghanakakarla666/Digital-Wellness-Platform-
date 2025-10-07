@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracker - Wellness Platform</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/dashboard.css" rel="stylesheet">
+    <style>
+        .progress-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .metric-trend-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .metric-trend-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .trend-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .trend-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .trend-change {
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+        }
+
+        .trend-up {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .trend-down {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .trend-stable {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .milestone-card {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .milestone-card::before {
+            content: '🏆';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 4rem;
+            opacity: 0.2;
+        }
+
+        .goal-progress-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .circular-progress {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+        }
+
+        .circular-progress svg {
+            transform: rotate(-90deg);
+        }
+
+        .progress-background {
+            fill: none;
+            stroke: #e9ecef;
+            stroke-width: 8;
+        }
+
+        .progress-bar {
+            fill: none;
+            stroke: #28a745;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dasharray 0.5s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .progress-percentage {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #28a745;
+        }
+
+        .progress-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 1rem;
+        }
+
+        .time-filter {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .time-filter .btn {
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .insight-card {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .insight-icon {
+            font-size: 1.5rem;
+            margin-right: 0.75rem;
+        }
+
+        .weekly-summary {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .day-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin: 0 auto 0.5rem;
+        }
+
+        .day-great {
+            background: #28a745;
+            color: white;
+        }
+
+        .day-good {
+            background: #ffc107;
+            color: #856404;
+        }
+
+        .day-fair {
+            background: #fd7e14;
+            color: white;
+        }
+
+        .day-poor {
+            background: #dc3545;
+            color: white;
+        }
+
+        .day-no-data {
+            background: #e9ecef;
+            color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            .progress-hero {
+                padding: 2rem 0;
+                text-align: center;
+            }
+            
+            .chart-container {
+                height: 250px;
+            }
+            
+            .time-filter {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="../index.html">
+                🌟 Wellness Platform
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="assessment-portal.html">Assessment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="results-dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="nutrition-planner.html">Nutrition</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="progress-tracker.html">Progress</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resources-hub.html">Resources</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Hero Section -->
+        <div class="progress-hero">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-4 fw-bold mb-3">📈 Your Wellness Journey</h1>
+                    <p class="lead mb-4">Track your progress, celebrate milestones, and stay motivated on your path to better health.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="metric-trend-card">
+                        <div class="text-center">
+                            <div style="font-size: 2.5rem; font-weight: 700; color: #28a745;" id="overallScore">78</div>
+                            <div style="font-size: 1rem; color: #6c757d;">Overall Wellness Score</div>
+                            <div class="trend-change trend-up mt-2" id="overallTrend">+5 this week</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Column: Charts and Trends -->
+            <div class="col-lg-8">
+                <!-- Time Filter -->
+                <div class="time-filter">
+                    <button class="btn btn-primary active" onclick="updateTimeRange('7d')" id="filter-7d">7 Days</button>
+                    <button class="btn btn-outline-primary" onclick="updateTimeRange('30d')" id="filter-30d">30 Days</button>
+                    <button class="btn btn-outline-primary" onclick="updateTimeRange('90d')" id="filter-90d">3 Months</button>
+                    <button class="btn btn-outline-primary" onclick="updateTimeRange('1y')" id="filter-1y">1 Year</button>
+                </div>
+
+                <!-- Main Trend Chart -->
+                <div class="metric-trend-card">
+                    <div class="trend-header">
+                        <h5 class="trend-title">📊 Wellness Score Trend</h5>
+                        <select class="form-select form-select-sm" style="width: auto;" onchange="updateMetric(this.value)">
+                            <option value="wellness">Overall Wellness</option>
+                            <option value="bmi">BMI</option>
+                            <option value="calories">Daily Calories</option>
+                            <option value="activity">Activity Level</option>
+                            <option value="sleep">Sleep Quality</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="mainTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Multi-Metric Comparison -->
+                <div class="metric-trend-card">
+                    <div class="trend-header">
+                        <h5 class="trend-title">🎯 Key Metrics Comparison</h5>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Weekly Activity Pattern -->
+                <div class="weekly-summary">
+                    <h5 class="mb-3">📅 This Week's Activity</h5>
+                    <div class="row text-center">
+                        <div class="col">
+                            <div class="day-indicator day-great" id="day-0">M</div>
+                            <small class="text-muted">Mon</small>
+                        </div>
+                        <div class="col">
+                            <div class="day-indicator day-good" id="day-1">T</div>
+                            <small class="text-muted">Tue</small>
+                        </div>
+                        <div class="col">
+                            <div class="day-indicator day-great" id="day-2">W</div>
+                            <small class="text-muted">Wed</small>
+                        </div>
+                        <div class="col">
+                            <div class="day-indicator day-fair" id="day-3">T</div>
+                            <small class="text-muted">Thu</small>
+                        </div>
+                        <div class="col">
+                            <div class="day-indicator day-good" id="day-4">F</div>
+                            <small class="text-muted">Fri</small>
+                        </div>
+                        <div class="col">
+                            <div class="day-indicator day-poor" id="day-5">S</div>
+                            <small class="text-muted">Sat</small>
+                        </div>
+                        <div class="col">
+                            <div class="day-indicator day-no-data" id="day-6">S</div>
+                            <small class="text-muted">Sun</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Goals and Insights -->
+            <div class="col-lg-4">
+                <!-- Goal Progress -->
+                <div class="goal-progress-card">
+                    <h5 class="mb-3">🎯 Monthly Goals</h5>
+                    
+                    <div class="mb-4">
+                        <div class="circular-progress">
+                            <svg width="120" height="120">
+                                <circle class="progress-background" cx="60" cy="60" r="50"></circle>
+                                <circle class="progress-bar" cx="60" cy="60" r="50" 
+                                        stroke-dasharray="314" stroke-dashoffset="94.2" id="weight-progress"></circle>
+                            </svg>
+                            <div class="progress-text">
+                                <div class="progress-percentage">70%</div>
+                                <div class="progress-label">Weight Goal</div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-2">
+                            <small class="text-muted">3.5 lbs to go</small>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="circular-progress">
+                            <svg width="120" height="120">
+                                <circle class="progress-background" cx="60" cy="60" r="50"></circle>
+                                <circle class="progress-bar" cx="60" cy="60" r="50" 
+                                        stroke-dasharray="314" stroke-dashoffset="62.8" id="activity-progress"
+                                        stroke="#17a2b8"></circle>
+                            </svg>
+                            <div class="progress-text">
+                                <div class="progress-percentage" style="color: #17a2b8;">80%</div>
+                                <div class="progress-label">Activity Goal</div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-2">
+                            <small class="text-muted">2 more workouts</small>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="circular-progress">
+                            <svg width="120" height="120">
+                                <circle class="progress-background" cx="60" cy="60" r="50"></circle>
+                                <circle class="progress-bar" cx="60" cy="60" r="50" 
+                                        stroke-dasharray="314" stroke-dashoffset="31.4" id="nutrition-progress"
+                                        stroke="#ffc107"></circle>
+                            </svg>
+                            <div class="progress-text">
+                                <div class="progress-percentage" style="color: #ffc107;">90%</div>
+                                <div class="progress-label">Nutrition Goal</div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-2">
+                            <small class="text-muted">Great progress!</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Milestones -->
+                <div class="mb-4">
+                    <h5 class="mb-3">🏆 Recent Achievements</h5>
+                    
+                    <div class="milestone-card">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3" style="font-size: 2rem;">🎯</div>
+                            <div>
+                                <div class="fw-bold">First Week Complete!</div>
+                                <small>Completed 7 days of health tracking</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="milestone-card">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3" style="font-size: 2rem;">💪</div>
+                            <div>
+                                <div class="fw-bold">Consistency Streak</div>
+                                <small>5 days in a row of meeting goals</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="milestone-card">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3" style="font-size: 2rem;">🥗</div>
+                            <div>
+                                <div class="fw-bold">Nutrition Master</div>
+                                <small>Met daily nutrition goals 10 times</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Insights -->
+                <div>
+                    <h5 class="mb-3">💡 Smart Insights</h5>
+                    
+                    <div class="insight-card">
+                        <div class="d-flex align-items-start">
+                            <span class="insight-icon">📈</span>
+                            <div>
+                                <strong>Trending Up!</strong>
+                                <p class="mb-1 small">Your wellness score improved by 12% this month. Keep up the great work!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="insight-card">
+                        <div class="d-flex align-items-start">
+                            <span class="insight-icon">⏰</span>
+                            <div>
+                                <strong>Best Time Pattern</strong>
+                                <p class="mb-1 small">You perform best on weekdays. Consider planning key activities Monday-Friday.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="insight-card">
+                        <div class="d-flex align-items-start">
+                            <span class="insight-icon">🎯</span>
+                            <div>
+                                <strong>Goal Recommendation</strong>
+                                <p class="mb-1 small">Based on your progress, consider increasing your activity goal by 10%.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/chart.min.js"></script>
+    <script src="../js/progress-tracker.js"></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Results Dashboard - Digital Wellness Platform</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <strong>🏥 Wellness Platform</strong>
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="../index.html">Home</a>
+                <a class="nav-link" href="assessment-portal.html">New Assessment</a>
+                <a class="nav-link" href="nutrition-planner.html">Nutrition</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- Main Dashboard Content -->
+            <div class="col-12">
+                <!-- Header Section -->
+                <div class="dashboard-header mb-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h1 class="dashboard-title">Your Health Dashboard</h1>
+                            <p class="text-muted">Assessment completed on <span id="completionDate"></span></p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <button class="btn btn-health" onclick="exportResults()">
+                                📄 Export Report
+                            </button>
+                            <button class="btn btn-outline-primary ms-2" onclick="printResults()">
+                                🖨️ Print
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Metrics Row -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-3">
+                        <div class="card metric-card h-100">
+                            <div class="card-body text-center">
+                                <div class="metric-icon">⚖️</div>
+                                <h3 class="metric-value" id="bmiValue">--</h3>
+                                <p class="metric-label">BMI</p>
+                                <span class="metric-status" id="bmiStatus">--</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card metric-card h-100">
+                            <div class="card-body text-center">
+                                <div class="metric-icon">❤️</div>
+                                <h3 class="metric-value" id="healthScore">--</h3>
+                                <p class="metric-label">Health Score</p>
+                                <span class="metric-status" id="healthScoreStatus">--</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card metric-card h-100">
+                            <div class="card-body text-center">
+                                <div class="metric-icon">🎯</div>
+                                <h3 class="metric-value" id="riskLevel">--</h3>
+                                <p class="metric-label">Risk Level</p>
+                                <span class="metric-status" id="riskStatus">--</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card metric-card h-100">
+                            <div class="card-body text-center">
+                                <div class="metric-icon">🏃‍♂️</div>
+                                <h3 class="metric-value" id="activityScore">--</h3>
+                                <p class="metric-label">Activity Level</p>
+                                <span class="metric-status" id="activityStatus">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts and Analysis Row -->
+                <div class="row g-4 mb-4">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">📊 Health Metrics Breakdown</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="healthMetricsChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="mb-0">🎯 BMI Category</h5>
+                            </div>
+                            <div class="card-body d-flex align-items-center justify-content-center">
+                                <canvas id="bmiChart" width="200" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommendations and Details Row -->
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">💡 Personalized Recommendations</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="recommendationsList">
+                                    <!-- Recommendations will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">📋 Assessment Summary</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="assessmentSummary">
+                                    <!-- Summary will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Items -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">🚀 Next Steps</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <a href="nutrition-planner.html" class="btn btn-outline-success w-100 h-100 d-flex flex-column align-items-center justify-content-center py-3">
+                                            <div class="fs-2 mb-2">🥗</div>
+                                            <strong>Nutrition Planning</strong>
+                                            <small class="text-muted">Create your meal plan</small>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="progress-tracker.html" class="btn btn-outline-info w-100 h-100 d-flex flex-column align-items-center justify-content-center py-3">
+                                            <div class="fs-2 mb-2">📈</div>
+                                            <strong>Track Progress</strong>
+                                            <small class="text-muted">Monitor your journey</small>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="resources-hub.html" class="btn btn-outline-warning w-100 h-100 d-flex flex-column align-items-center justify-content-center py-3">
+                                            <div class="fs-2 mb-2">📚</div>
+                                            <strong>Learn More</strong>
+                                            <small class="text-muted">Health resources</small>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background: rgba(255,255,255,0.9); z-index: 9999;">
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3">Analyzing your health data...</p>
+        </div>
+    </div>
+
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/chart.min.js"></script>
+    <script src="../js/health-calculator.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

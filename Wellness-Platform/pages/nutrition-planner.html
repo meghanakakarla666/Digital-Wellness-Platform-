@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Planner - Digital Wellness Platform</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/nutrition.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <strong>🏥 Wellness Platform</strong>
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="../index.html">Home</a>
+                <a class="nav-link" href="assessment-portal.html">Assessment</a>
+                <a class="nav-link" href="results-dashboard.html">Dashboard</a>
+                <a class="nav-link" href="progress-tracker.html">Progress</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Welcome Header -->
+        <div class="welcome-section mb-5">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-4 text-primary">🍎 Nutrition Made Simple</h1>
+                    <p class="lead">Track your daily meals and reach your health goals effortlessly</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="daily-score-card">
+                        <div class="score-number" id="dailyScore">0</div>
+                        <div class="score-label">Today's Score</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="quick-stats-row mb-4">
+            <div class="row g-3">
+                <div class="col-6 col-md-3">
+                    <div class="stat-card calories">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-number" id="totalCalories">0</div>
+                        <div class="stat-label">Calories</div>
+                        <div class="stat-goal">/ <span id="calorieGoal">2000</span></div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card protein">
+                        <div class="stat-icon">💪</div>
+                        <div class="stat-number" id="totalProtein">0</div>
+                        <div class="stat-label">Protein</div>
+                        <div class="stat-goal">/ <span id="proteinGoal">150</span>g</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card carbs">
+                        <div class="stat-icon">�</div>
+                        <div class="stat-number" id="totalCarbs">0</div>
+                        <div class="stat-label">Carbs</div>
+                        <div class="stat-goal">/ <span id="carbGoal">250</span>g</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card fats">
+                        <div class="stat-icon">🥑</div>
+                        <div class="stat-number" id="totalFat">0</div>
+                        <div class="stat-label">Fats</div>
+                        <div class="stat-goal">/ <span id="fatGoal">65</span>g</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="row g-4">
+            <!-- Meals Section -->
+            <div class="col-lg-8">
+                <div class="meals-container">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3>📅 Today's Meals</h3>
+                        <div class="meal-actions">
+                            <button class="btn btn-outline-primary me-2" onclick="clearAllMeals()">
+                                🗑️ Clear All
+                            </button>
+                            <button class="btn btn-primary" onclick="generateSmartMealPlan()">
+                                ✨ Smart Plan
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Simplified Meal Cards -->
+                    <div class="simple-meals">
+                        <div class="simple-meal-card" data-meal="breakfast">
+                            <div class="meal-info">
+                                <div class="meal-title">
+                                    <span class="meal-emoji">🌅</span>
+                                    <span class="meal-name">Breakfast</span>
+                                    <span class="meal-calories">0 cal</span>
+                                </div>
+                                <div class="meal-foods" id="breakfast-foods">
+                                    <div class="empty-meal">Tap + to add food</div>
+                                </div>
+                            </div>
+                            <button class="add-food-btn" onclick="openFoodSelector('breakfast')">+</button>
+                        </div>
+
+                        <div class="simple-meal-card" data-meal="lunch">
+                            <div class="meal-info">
+                                <div class="meal-title">
+                                    <span class="meal-emoji">☀️</span>
+                                    <span class="meal-name">Lunch</span>
+                                    <span class="meal-calories">0 cal</span>
+                                </div>
+                                <div class="meal-foods" id="lunch-foods">
+                                    <div class="empty-meal">Tap + to add food</div>
+                                </div>
+                            </div>
+                            <button class="add-food-btn" onclick="openFoodSelector('lunch')">+</button>
+                        </div>
+
+                        <div class="simple-meal-card" data-meal="dinner">
+                            <div class="meal-info">
+                                <div class="meal-title">
+                                    <span class="meal-emoji">🌙</span>
+                                    <span class="meal-name">Dinner</span>
+                                    <span class="meal-calories">0 cal</span>
+                                </div>
+                                <div class="meal-foods" id="dinner-foods">
+                                    <div class="empty-meal">Tap + to add food</div>
+                                </div>
+                            </div>
+                            <button class="add-food-btn" onclick="openFoodSelector('dinner')">+</button>
+                        </div>
+
+                        <div class="simple-meal-card" data-meal="snacks">
+                            <div class="meal-info">
+                                <div class="meal-title">
+                                    <span class="meal-emoji">🍎</span>
+                                    <span class="meal-name">Snacks</span>
+                                    <span class="meal-calories">0 cal</span>
+                                </div>
+                                <div class="meal-foods" id="snacks-foods">
+                                    <div class="empty-meal">Tap + to add food</div>
+                                </div>
+                            </div>
+                            <button class="add-food-btn" onclick="openFoodSelector('snacks')">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="col-lg-4">
+                <!-- Progress Chart -->
+                <div class="progress-card mb-4">
+                    <h5 class="mb-3">📊 Daily Progress</h5>
+                    <canvas id="nutritionProgress" width="300" height="200"></canvas>
+                </div>
+
+                <!-- Today's Tips -->
+                <div class="tips-card">
+                    <h5 class="mb-3">💡 Today's Tips</h5>
+                    <div id="nutritionTips">
+                        <div class="tip-item">
+                            <span class="tip-emoji">🥗</span>
+                            <span class="tip-text">Aim for 5 servings of fruits & vegetables</span>
+                        </div>
+                        <div class="tip-item">
+                            <span class="tip-emoji">💧</span>
+                            <span class="tip-text">Drink 8 glasses of water today</span>
+                        </div>
+                        <div class="tip-item">
+                            <span class="tip-emoji">⏰</span>
+                            <span class="tip-text">Eat every 3-4 hours for stable energy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Food Search Modal -->
+    <div class="modal fade" id="foodSearchModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">🔍 Search Foods</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control mb-3" id="foodSearch" placeholder="Search for foods...">
+                    <div id="foodSearchResults">
+                        <!-- Search results will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/chart.min.js"></script>
+    <script src="../js/nutrition-calculator.js"></script>
+    <script src="../js/nutrition-planner-simple.js"></script>
+</body>
+</html>

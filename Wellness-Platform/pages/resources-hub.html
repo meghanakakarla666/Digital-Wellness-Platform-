@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources Hub - Wellness Platform</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <style>
+        .resources-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+
+        .category-card.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .category-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .article-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .article-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #495057;
+        }
+
+        .article-excerpt {
+            color: #6c757d;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .read-time {
+            background: #f8f9fa;
+            padding: 0.25rem 0.5rem;
+            border-radius: 10px;
+        }
+
+        .search-container {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .filter-tag {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-tag:hover, .filter-tag.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .quick-tips-sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 2rem;
+        }
+
+        .tip-item {
+            padding: 1rem;
+            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .tip-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+
+        .tip-content {
+            font-size: 0.9rem;
+            color: #6c757d;
+            line-height: 1.5;
+        }
+
+        .faq-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e9ecef;
+            padding: 1.5rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: #495057;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+        }
+
+        .faq-question:hover {
+            color: #667eea;
+        }
+
+        .faq-answer {
+            color: #6c757d;
+            line-height: 1.6;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .faq-answer.show {
+            display: block;
+        }
+
+        .faq-toggle {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-toggle.rotate {
+            transform: rotate(45deg);
+        }
+
+        .calculator-widget {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .widget-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 1.5rem;
+        }
+
+        .calculator-input {
+            margin-bottom: 1rem;
+        }
+
+        .calculator-result {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .resources-hero {
+                padding: 2rem 0;
+                text-align: center;
+            }
+            
+            .category-card {
+                margin-bottom: 1rem;
+            }
+            
+            .quick-tips-sidebar {
+                position: static;
+                margin-top: 2rem;
+            }
+
+            .filter-tags {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="../index.html">
+                🌟 Wellness Platform
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="assessment-portal.html">Assessment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="results-dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="nutrition-planner.html">Nutrition</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="progress-tracker.html">Progress</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="resources-hub.html">Resources</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Hero Section -->
+        <div class="resources-hero">
+            <div class="text-center">
+                <h1 class="display-4 fw-bold mb-3">📚 Health Resources Hub</h1>
+                <p class="lead mb-4">Your comprehensive guide to wellness, nutrition, fitness, and healthy living</p>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="search-container">
+                            <input type="text" class="form-control search-input" id="resourceSearch" 
+                                   placeholder="Search for health topics, tips, or articles...">
+                            <div class="filter-tags">
+                                <span class="filter-tag active" data-category="all">All Topics</span>
+                                <span class="filter-tag" data-category="nutrition">Nutrition</span>
+                                <span class="filter-tag" data-category="fitness">Fitness</span>
+                                <span class="filter-tag" data-category="mental-health">Mental Health</span>
+                                <span class="filter-tag" data-category="sleep">Sleep</span>
+                                <span class="filter-tag" data-category="prevention">Prevention</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Category Cards -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="category-card" data-category="nutrition">
+                            <span class="category-icon">🥗</span>
+                            <div class="category-title">Nutrition Guide</div>
+                            <div class="category-description">Healthy eating, meal planning, and nutritional science</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-card" data-category="fitness">
+                            <span class="category-icon">💪</span>
+                            <div class="category-title">Fitness & Exercise</div>
+                            <div class="category-description">Workout routines, exercise science, and physical activity</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-card" data-category="mental-health">
+                            <span class="category-icon">🧠</span>
+                            <div class="category-title">Mental Wellness</div>
+                            <div class="category-description">Stress management, mindfulness, and emotional health</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Articles Section -->
+                <div id="articlesContainer">
+                    <!-- Articles will be populated by JavaScript -->
+                </div>
+
+                <!-- FAQ Section -->
+                <div class="faq-section">
+                    <h3 class="mb-4">💡 Frequently Asked Questions</h3>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(0)">
+                            How often should I exercise for optimal health?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            The CDC recommends at least 150 minutes of moderate-intensity aerobic activity or 75 minutes of vigorous-intensity aerobic activity per week, plus muscle-strengthening activities on 2 or more days per week.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(1)">
+                            What's the best diet for weight loss?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            The best diet is one you can stick to long-term. Focus on creating a moderate calorie deficit through a balanced diet rich in whole foods, vegetables, lean proteins, and healthy fats. Consult with a healthcare provider for personalized advice.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(2)">
+                            How many hours of sleep do I need?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            Most adults need 7-9 hours of quality sleep per night. Individual needs may vary, but consistently getting less than 7 hours can impact your health, mood, and cognitive function.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(3)">
+                            How can I manage stress effectively?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            Effective stress management includes regular exercise, adequate sleep, healthy eating, mindfulness practices, social connections, and time management. Consider professional help if stress becomes overwhelming.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(4)">
+                            What are the most important health screenings?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            Key screenings include blood pressure, cholesterol, blood sugar, BMI, cancer screenings (mammogram, colonoscopy, skin checks), and regular check-ups with your healthcare provider. Timing depends on age and risk factors.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Quick Health Calculator -->
+                <div class="calculator-widget">
+                    <h5 class="widget-title">🧮 Quick BMI Calculator</h5>
+                    <div class="calculator-input">
+                        <label class="form-label">Height (cm)</label>
+                        <input type="number" class="form-control" id="calcHeight" placeholder="170">
+                    </div>
+                    <div class="calculator-input">
+                        <label class="form-label">Weight (kg)</label>
+                        <input type="number" class="form-control" id="calcWeight" placeholder="70">
+                    </div>
+                    <button class="btn btn-primary w-100" onclick="calculateBMI()">Calculate BMI</button>
+                    <div id="bmiResult" class="calculator-result" style="display: none;">
+                        <div class="result-value" id="bmiValue">--</div>
+                        <div class="result-label" id="bmiCategory">BMI Category</div>
+                    </div>
+                </div>
+
+                <!-- Daily Tips -->
+                <div class="quick-tips-sidebar">
+                    <h5 class="mb-3">💡 Daily Health Tips</h5>
+                    
+                    <div class="tip-item">
+                        <div class="tip-title">Stay Hydrated</div>
+                        <div class="tip-content">Drink water throughout the day. Aim for 8 glasses, more if you're active or in hot weather.</div>
+                    </div>
+
+                    <div class="tip-item">
+                        <div class="tip-title">Move Every Hour</div>
+                        <div class="tip-content">Take a 2-minute walk every hour to improve circulation and reduce sitting time.</div>
+                    </div>
+
+                    <div class="tip-item">
+                        <div class="tip-title">Mindful Eating</div>
+                        <div class="tip-content">Eat slowly and pay attention to hunger cues. This helps with digestion and portion control.</div>
+                    </div>
+
+                    <div class="tip-item">
+                        <div class="tip-title">Deep Breath</div>
+                        <div class="tip-content">Take 5 deep breaths when stressed. This activates your body's relaxation response.</div>
+                    </div>
+
+                    <div class="tip-item">
+                        <div class="tip-title">Quality Sleep</div>
+                        <div class="tip-content">Keep a consistent sleep schedule and create a relaxing bedtime routine.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/resources-hub.js"></script>
+</body>
+</html>
