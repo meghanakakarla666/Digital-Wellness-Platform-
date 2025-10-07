@@ -259,8 +259,5 @@ class HealthCalculator {
     }
 }
 
-
-}
-
 // Export for use in other modules
 window.HealthCalculator = HealthCalculator;

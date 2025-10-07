@@ -1,6 +1,6 @@
 class WellnessDashboard {
     constructor() {
-        this.calculator = new HealthCalculator();
+        this.calculator = null;
         this.charts = {};
         this.init();
     }
@@ -20,6 +20,12 @@ class WellnessDashboard {
     async loadResults() {
         try {
             console.log('Dashboard loading results...');
+            
+            // Initialize calculator if not already done
+            if (!this.calculator && window.HealthCalculator) {
+                this.calculator = new HealthCalculator();
+            }
+            
             // Show loading overlay
             this.showLoading(true);
             
@@ -109,6 +115,16 @@ class WellnessDashboard {
     }
 
     calculateAllMetrics(formData) {
+        // Ensure calculator is initialized
+        if (!this.calculator && window.HealthCalculator) {
+            this.calculator = new HealthCalculator();
+        }
+        
+        if (!this.calculator) {
+            console.error('HealthCalculator not available');
+            return this.getDefaultMetrics();
+        }
+        
         const weight = parseFloat(formData.weight);
         const height = parseFloat(formData.height);
         const age = parseInt(formData.age);
@@ -141,6 +157,24 @@ class WellnessDashboard {
         };
     }
 
+    getDefaultMetrics() {
+        return {
+            bmi: null,
+            bmiCategory: { status: 'Unknown', class: 'status-warning' },
+            bodyFat: null,
+            healthScore: 50,
+            riskLevel: { level: 'Unknown', class: 'status-warning', score: 2 },
+            idealWeight: null,
+            bmr: null,
+            tdee: null,
+            recommendations: [],
+            weight: 0,
+            height: 0,
+            age: 0,
+            gender: 'unknown'
+        };
+    }
+
     updateDashboard(metrics, formData) {
         // Update completion date
         const completionDate = new Date().toLocaleDateString('en-US', {
@@ -160,7 +194,7 @@ class WellnessDashboard {
         this.updateMetricCard('riskLevel', metrics.riskLevel.level);
         this.updateMetricCard('riskStatus', this.getRiskLabel(metrics.riskLevel.score), metrics.riskLevel.class);
 
-        const activityInfo = this.calculator.activityMultipliers[formData.activityLevel];
+        const activityInfo = this.calculator?.activityMultipliers?.[formData.activityLevel];
         this.updateMetricCard('activityScore', activityInfo?.label || '--');
         this.updateMetricCard('activityStatus', this.getActivityLabel(activityInfo?.score), this.getActivityClass(activityInfo?.score));
 
@@ -248,7 +282,7 @@ class WellnessDashboard {
             { label: 'Body Fat', value: metrics.bodyFat ? `${metrics.bodyFat}%` : '--' },
             { label: 'Ideal Weight', value: metrics.idealWeight ? `${metrics.idealWeight} kg` : '--' },
             { label: 'Daily Calories (BMR)', value: metrics.bmr ? `${metrics.bmr} kcal` : '--' },
-            { label: 'Activity Level', value: this.calculator.activityMultipliers[formData.activityLevel]?.label || '--' }
+            { label: 'Activity Level', value: this.calculator?.activityMultipliers?.[formData.activityLevel]?.label || '--' }
         ];
 
         container.innerHTML = summaryItems.map(item => `
@@ -274,7 +308,7 @@ class WellnessDashboard {
                 label: 'Health Metrics',
                 data: [
                     metrics.healthScore,
-                    (this.calculator.activityMultipliers[formData.activityLevel]?.score || 1) * 25,
+                    (this.calculator?.activityMultipliers?.[formData.activityLevel]?.score || 1) * 25,
                     this.getNutritionScore(formData),
                     this.getSleepScore(formData),
                     this.getBMIScore(metrics.bmi)
@@ -328,7 +362,7 @@ class WellnessDashboard {
         const bmiCategory = metrics.bmiCategory;
         if (!bmiCategory) return;
 
-        const categories = Object.keys(this.calculator.bmiRanges);
+        const categories = this.calculator ? Object.keys(this.calculator.bmiRanges) : ['underweight', 'normal', 'overweight', 'obese'];
         const currentIndex = categories.indexOf(bmiCategory.category);
 
         this.charts.bmi = new Chart(ctx, {
@@ -474,5 +508,21 @@ function loadTestData() {
     location.reload();
 }
 
-// Initialize dashboard
-const dashboard = new WellnessDashboard();
+// Initialize dashboard when DOM and dependencies are ready
+let dashboard;
+
+function initializeDashboard() {
+    if (window.HealthCalculator && !dashboard) {
+        dashboard = new WellnessDashboard();
+    } else if (!window.HealthCalculator) {
+        console.error('HealthCalculator not loaded yet, retrying...');
+        setTimeout(initializeDashboard, 100);
+    }
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeDashboard);
+} else {
+    initializeDashboard();
+}
