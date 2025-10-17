@@ -114,9 +114,23 @@
         }
 
         .read-time {
-            background: #f8f9fa;
-            padding: 0.25rem 0.5rem;
-            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .read-time:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            color: white;
         }
 
         .search-container {
@@ -155,12 +169,26 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 0.9rem;
+            color: #495057;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.25rem;
+            opacity: 1;
+            visibility: visible;
         }
 
-        .filter-tag:hover, .filter-tag.active {
+        .filter-tag:hover {
             background: #667eea;
             color: white;
             border-color: #667eea;
+            transform: translateY(-1px);
+        }
+
+        .filter-tag.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
         }
 
         .quick-tips-sidebar {
@@ -170,6 +198,8 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 2rem;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
         }
 
         .tip-item {
@@ -279,6 +309,52 @@
         .result-label {
             font-size: 0.9rem;
             opacity: 0.9;
+        }
+
+        /* New CSS for bookmarks section */
+        .bookmarks-sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 2rem;
+            max-height: 400px;
+            overflow-y: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .bookmark-list {
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .bookmark-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .bookmark-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .bookmark-list::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        .bookmark-list::-webkit-scrollbar-thumb:hover {
+            background: #5a67d8;
+        }
+
+        .bookmark-item {
+            transition: all 0.3s ease;
+        }
+
+        .bookmark-item:hover {
+            background-color: #f8f9fa;
+            transform: translateX(2px);
         }
 
         @media (max-width: 768px) {

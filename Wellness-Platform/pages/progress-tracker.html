@@ -279,6 +279,22 @@
                     </div>
                 </div>
             </div>
+        </div> <!-- End of progress-hero -->
+        
+        <!-- Export Controls -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="d-flex justify-content-end align-items-center gap-2">
+                    <label for="exportFormat" class="form-label mb-0 small">Export as:</label>
+                    <select id="exportFormat" class="form-select form-select-sm" style="width: 140px;">
+                        <option value="json">📄 JSON Format</option>
+                        <option value="csv">📊 CSV Format</option>
+                    </select>
+                    <button class="btn btn-outline-primary btn-sm" onclick="exportData()">
+                        💾 Export Progress
+                    </button>
+                </div>
+            </div>
         </div>
 
         <div class="row g-4">
