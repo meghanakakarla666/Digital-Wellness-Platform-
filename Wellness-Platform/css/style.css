@@ -1,13 +1,19 @@
 :root {
-    --primary-color: #667eea;
-    --secondary-color: #764ba2;
-    --accent-color: #ffc107;
-    --text-color: #333;
-    --bg-light: #f8f9fa;
-    --health-gradient: linear-gradient(135deg, #667eea, #764ba2);
-    --success-color: #28a745;
-    --info-color: #17a2b8;
-    --warning-color: #ffc107;
+    --primary-color: #f7eed2;
+    --secondary-color: #e6d7b8;
+    --accent-color: #d4a574;
+    --text-color: #5d4e37;
+    --bg-light: #fdfcf8;
+    --health-gradient: linear-gradient(135deg, #f7eed2, #e6d7b8);
+    --success-color: #8fbc8f;
+    --info-color: #daa520;
+    --warning-color: #cd853f;
+    --wellness-cream: #f7eed2;
+    --wellness-light: #fdfcf8;
+    --wellness-dark: #8b4513;
+    --trust-brown: #a0522d;
+    --energy-gold: #daa520;
+    --calm-beige: #f5deb3;
 }
 
 * {
@@ -18,14 +24,349 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text-color);
     line-height: 1.6;
+    padding-top: 90px; /* Account for fixed navbar */
+}
+
+/* Fix scroll positioning for anchor links with fixed header */
+section[id] {
+    scroll-margin-top: 120px; /* Offset for fixed header */
+}
+
+#home, #about, #features, #testimonials, #contact {
+    scroll-margin-top: 120px;
+}
+
+/* Home Section wrapper */
+.home-section {
+    scroll-margin-top: 90px; /* Adjust for navbar height */
+}
+
+/* About Section */
+#about {
+    background: linear-gradient(135deg, var(--wellness-light) 0%, var(--calm-beige) 100%);
+    position: relative;
+}
+
+#about::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><circle cx="100" cy="100" r="1" fill="rgba(102,126,234,0.05)"/><circle cx="900" cy="200" r="2" fill="rgba(118,75,162,0.05)"/><circle cx="300" cy="700" r="1" fill="rgba(102,126,234,0.05)"/><circle cx="800" cy="800" r="1" fill="rgba(118,75,162,0.05)"/></svg>');
+    pointer-events: none;
+    z-index: 1;
+}
+
+#about .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Benefits Section - Why Choose Our Platform */
+#benefits {
+    background: linear-gradient(135deg, #ffffff 0%, var(--wellness-light) 100%) !important;
+    position: relative;
+}
+
+#benefits .container {
+    position: relative;
+    z-index: 2;
+}
+
+#benefits h2 {
+    color: #000000 !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #000000 !important;
+    background-clip: unset !important;
+    position: relative;
+    z-index: 3;
+}
+
+/* Enhanced Benefit Cards with Semi-transparent Overlays */
+#benefits .col-lg-4 > div {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    height: 320px; /* Fixed height for all cards */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    min-width: 0; /* Ensure equal width distribution */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Specific background images for each benefit card - REMOVED */
+#benefits .col-lg-4:nth-child(1) > div {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+#benefits .col-lg-4:nth-child(2) > div,
+#benefits .benefit-card {
+    background: rgba(255, 255, 255, 0.95) !important;
+}
+
+#benefits .col-lg-4:nth-child(3) > div {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Semi-transparent overlay effect */
+#benefits .col-lg-4 > div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.03), rgba(118, 75, 162, 0.03));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+/* Hover Effects */
+#benefits .col-lg-4 > div:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    border-color: rgba(102, 126, 234, 0.2);
+}
+
+/* Enhanced hover effects - simplified without background images */
+#benefits .col-lg-4:nth-child(1) > div:hover {
+    background: rgba(255, 255, 255, 0.98);
+    transition: all 0.4s ease;
+}
+
+#benefits .col-lg-4:nth-child(2) > div:hover,
+#benefits .benefit-card:hover {
+    background: rgba(255, 255, 255, 0.98) !important;
+    transition: all 0.4s ease !important;
+}
+
+#benefits .col-lg-4:nth-child(3) > div:hover {
+    background: rgba(255, 255, 255, 0.98);
+    transition: all 0.4s ease;
+}
+
+#benefits .col-lg-4 > div:hover::before {
+    opacity: 1;
+}
+
+/* Enhanced styling for icons */
+#benefits .col-lg-4 > div i {
+    transition: all 0.4s ease;
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+#benefits .col-lg-4 > div:hover i {
+    transform: scale(1.2) rotate(5deg);
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+}
+
+/* Enhanced typography */
+#benefits .col-lg-4 > div h4 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #333;
+    transition: color 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+#benefits .col-lg-4 > div:hover h4 {
+    color: var(--trust-brown) !important;
+}
+
+#benefits .col-lg-4 > div p {
+    color: #666;
+    line-height: 1.6;
+    position: relative;
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+
+#benefits .col-lg-4 > div:hover p {
+    color: #555;
+}
+
+/* Special styling for the middle card (Enterprise Security) */
+#benefits .benefit-card {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-radius: 20px !important;
+    padding: 2rem !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    backdrop-filter: blur(10px) !important;
+    transition: all 0.4s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    height: 320px !important; /* Match other cards */
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+#benefits .benefit-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.05), rgba(32, 201, 151, 0.05));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+#benefits .benefit-card:hover {
+    transform: translateY(-15px) scale(1.02) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15) !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    border-color: rgba(40, 167, 69, 0.2) !important;
+}
+
+#benefits .benefit-card:hover::before {
+    opacity: 1;
+}
+
+#benefits .benefit-card:hover h4 {
+    color: var(--trust-brown) !important;
+}
+
+/* Icon circle hover effects */
+#benefits .benefit-card .icon-circle {
+    transition: all 0.4s ease !important;
+}
+
+#benefits .benefit-card:hover .icon-circle {
+    transform: scale(1.1) rotate(-5deg) !important;
+    box-shadow: 0 10px 25px rgba(40, 167, 69, 0.2) !important;
+}
+
+/* Ensure equal card distribution */
+#benefits .row {
+    display: flex;
+    align-items: stretch;
+}
+
+#benefits .col-lg-4 {
+    display: flex;
+    flex: 1;
+    margin-bottom: 0 !important;
+}
+
+/* Adjust icon and text sizing for consistency */
+#benefits .benefit-icon {
+    margin-bottom: 1rem !important;
+}
+
+#benefits .icon-circle {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 auto 1rem auto;
+}
+
+#benefits h4 {
+    font-size: 1.25rem !important;
+    margin-bottom: 1rem !important;
+}
+
+#benefits p {
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+}
+
+/* Features Section - Comprehensive Health Management */
+#features {
+    background: linear-gradient(135deg, var(--wellness-light) 0%, var(--primary-color) 100%) !important;
+    position: relative;
+}
+
+/* Testimonials Section */
+#testimonials {
+    background: #ffffff !important;
+    position: relative;
 }
 
 /* Professional Brand Elements */
 .text-gradient {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--health-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+}
+
+/* Enhanced Button Styles */
+.btn-lg {
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-light {
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: var(--wellness-dark) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+}
+
+.btn-light:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
+    color: var(--trust-brown) !important;
+}
+
+.btn-outline-light {
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color: var(--wellness-dark) !important;
+    background: transparent;
+}
+
+.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 1);
+    color: var(--trust-brown) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+}
+
+/* Button ripple effect */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before {
+    width: 300px;
+    height: 300px;
 }
 
 .text-white-75 {
@@ -42,8 +383,8 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 50%, var(--energy-gold) 100%);
+    color: var(--wellness-dark);
     position: relative;
     overflow: hidden;
     padding: 100px 0;
@@ -72,11 +413,112 @@ body {
     50% { transform: translateY(-20px); }
 }
 
+/* Welcome Banner */
+.welcome-marquee {
+    background: linear-gradient(135deg, var(--wellness-light) 0%, #ffffff 100%);
+    color: var(--wellness-dark);
+    padding: 15px 0;
+    position: relative;
+    border-bottom: 3px solid var(--accent-color);
+    text-align: center;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(212, 165, 116, 0.15);
+}
+
+.marquee-content {
+    display: inline-block;
+    animation: welcomeSlideInCenter 2s ease-out forwards;
+    opacity: 0;
+}
+
+.marquee-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    font-family: 'Arial Black', 'Helvetica', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--accent-color), var(--energy-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(212, 165, 116, 0.3);
+}
+
+/* Welcome animation - slides in from left and centers */
+@keyframes welcomeSlideInCenter {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    70% {
+        opacity: 1;
+        transform: translateX(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Continuous floating animation after initial load */
+.marquee-content {
+    animation: welcomeSlideInCenter 2s ease-out forwards, gentleFloat 4s ease-in-out 2s infinite;
+}
+
+@keyframes gentleFloat {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(15px);
+    }
+    50% {
+        transform: translateX(0);
+    }
+    75% {
+        transform: translateX(-15px);
+    }
+}
+
+/* Add a subtle glow effect after animation */
+.welcome-marquee::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    animation: welcomeGlow 3s ease-in-out 2s, gentleShimmer 6s ease-in-out 4s infinite;
+    pointer-events: none;
+}
+
+@keyframes welcomeGlow {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes gentleShimmer {
+    0%, 100% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    50% {
+        opacity: 0.3;
+        transform: translateX(100%);
+    }
+}
+
 .hero h1 {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    color: #000000 !important;
+    text-shadow: 0 2px 4px rgba(255,255,255,0.5);
     line-height: 1.2;
 }
 
@@ -84,8 +526,231 @@ body {
     font-size: 1.25rem;
     margin-bottom: 2rem;
     opacity: 0.9;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    color: var(--text-color);
+    text-shadow: 0 1px 2px rgba(255,255,255,0.3);
     line-height: 1.6;
+}
+
+/* Nutrition Animation Container */
+.nutrition-animation-container {
+    position: relative;
+    height: 450px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(33, 105, 92, 0.3);
+}
+
+.nutrition-scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+/* Scene Background */
+.scene-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 50%, var(--energy-gold) 100%);
+    opacity: 0.9;
+}
+
+/* Floating Food Items */
+.floating-foods {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.food-item {
+    position: absolute;
+    font-size: 2.5rem;
+    animation: floatVeggies 4s ease-in-out infinite;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.food-item:hover {
+    transform: scale(1.2) !important;
+}
+
+/* Positioning for each vegetable/fruit */
+.food-item:nth-child(1) { /* Lettuce */
+    top: 15%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.food-item:nth-child(2) { /* Carrot */
+    top: 25%;
+    right: 15%;
+    animation-delay: 0.5s;
+}
+
+.food-item:nth-child(3) { /* Cucumber */
+    top: 45%;
+    left: 20%;
+    animation-delay: 1s;
+}
+
+.food-item:nth-child(4) { /* Tomato */
+    bottom: 35%;
+    right: 25%;
+    animation-delay: 1.5s;
+}
+
+.food-item:nth-child(5) { /* Blueberries */
+    top: 35%;
+    left: 70%;
+    animation-delay: 2s;
+}
+
+.food-item:nth-child(6) { /* Broccoli */
+    bottom: 25%;
+    left: 15%;
+    animation-delay: 2.5s;
+}
+
+.food-item:nth-child(7) { /* Avocado */
+    top: 55%;
+    right: 10%;
+    animation-delay: 3s;
+}
+
+.food-item:nth-child(8) { /* Corn */
+    bottom: 45%;
+    left: 60%;
+    animation-delay: 3.5s;
+}
+
+.food-item:nth-child(9) { /* Orange */
+    top: 65%;
+    left: 40%;
+    animation-delay: 4s;
+}
+
+.food-item:nth-child(10) { /* Mango */
+    bottom: 15%;
+    right: 40%;
+    animation-delay: 4.5s;
+}
+
+@keyframes floatVeggies {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translateY(-15px) rotate(5deg) scale(1.05);
+    }
+    50% {
+        transform: translateY(-25px) rotate(-3deg) scale(1.1);
+    }
+    75% {
+        transform: translateY(-10px) rotate(2deg) scale(1.05);
+    }
+}
+
+/* Central Wellness Hub */
+.wellness-hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.hub-circle {
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(33, 105, 92, 0.3);
+    animation: hubPulse 3s ease-in-out infinite;
+}
+
+.hub-icon {
+    font-size: 2rem;
+    margin-bottom: 5px;
+    animation: growShrink 2s ease-in-out infinite;
+}
+
+.hub-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #21695c;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@keyframes hubPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 10px 30px rgba(33, 105, 92, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(33, 105, 92, 0.4);
+    }
+}
+
+@keyframes growShrink {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* Nutrition Stats */
+.nutrition-stats {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.stat-badge {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 15px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    transition: transform 0.3s ease;
+}
+
+.stat-badge:hover {
+    transform: translateY(-3px);
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #21695c;
+    margin-bottom: 2px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.7rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* Health-themed components */
@@ -100,17 +765,20 @@ body {
 }
 
 .btn-health {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--accent-color), var(--energy-gold));
+    border: none;
     color: white;
     padding: 12px 30px;
     font-weight: 600;
     border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+    transition: all 0.3s ease;
 }
 
 .btn-health:hover {
-    background-color: #218838;
-    transform: translateY(-1px);
+    background: linear-gradient(135deg, var(--trust-brown), var(--accent-color));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 165, 116, 0.4);
 }
 
 /* Progress indicators */
@@ -143,30 +811,49 @@ body {
 
 /* Navigation */
 .navbar {
-    padding-top: 1.5rem !important;
-    padding-bottom: 1.5rem !important;
-    margin-bottom: 2rem;
-    background: linear-gradient(135deg, #f8f9ff 0%, #e8eeff 100%) !important;
-    border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-    backdrop-filter: blur(10px);
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    background-color: #f7eed2 !important;
+    border-bottom: 2px solid var(--accent-color);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 25px rgba(247, 238, 210, 0.3);
+    transition: all 0.3s ease;
+}
+
+.navbar.fixed-top {
+    z-index: 1030;
+}
+
+/* Add slight transparency when scrolled */
+.navbar.scrolled {
+    background-color: rgba(247, 238, 210, 0.95) !important;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 6px 30px rgba(247, 238, 210, 0.4);
 }
 
 .navbar-brand {
     font-weight: 700;
-    color: var(--primary-color) !important;
+    color: #000000 !important;
     font-size: 1.4rem;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-decoration: none !important;
+}
+
+/* Simple hover effect for brand */
+.navbar-brand:hover {
+    transform: scale(1.02);
+    transition: all 0.2s ease;
 }
 
 /* Navigation links styling */
 .navbar-nav .nav-link {
-    color: var(--text-color) !important;
+    color: var(--wellness-dark) !important;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
 .navbar-nav .nav-link:hover {
-    color: var(--primary-color) !important;
+    color: var(--accent-color) !important;
 }
 
 /* Professional Components */
@@ -206,9 +893,48 @@ body {
 }
 
 /* Feature Cards */
+.feature-card {
+    transition: all 0.4s ease;
+    border: 2px solid transparent !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+}
+
 .feature-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px) scale(1.02);
+    transition: all 0.4s ease;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 15px 40px rgba(44, 120, 115, 0.2) !important;
+}
+
+.feature-card .feature-icon {
+    transition: all 0.4s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 8px 25px rgba(44, 120, 115, 0.2);
+}
+
+/* Feature card links */
+.feature-card a {
+    position: relative;
     transition: all 0.3s ease;
+}
+
+.feature-card a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.feature-card:hover a::after {
+    width: 100%;
 }
 
 .benefit-card:hover .icon-circle {
@@ -217,9 +943,34 @@ body {
 }
 
 /* Testimonial Cards */
-.testimonial-card:hover {
-    transform: translateY(-5px);
-    transition: all 0.3s ease;
+#testimonials .card {
+    transition: all 0.4s ease;
+    border: none !important;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08) !important;
+}
+
+#testimonials .card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(44, 120, 115, 0.15) !important;
+    background: rgba(255, 255, 255, 1);
+}
+
+#testimonials .text-warning {
+    color: var(--energy-orange) !important;
+    font-size: 1.2rem;
+    filter: drop-shadow(0 2px 4px rgba(247, 127, 0, 0.3));
+}
+
+#testimonials .card-body p {
+    color: var(--calm-gray);
+    line-height: 1.7;
+    font-style: italic;
+}
+
+#testimonials .blockquote-footer {
+    color: #666 !important;
+    font-weight: 600;
 }
 
 /* Pricing Cards */
@@ -246,55 +997,261 @@ body {
     transform: scale(1.05);
 }
 
-/* Section Headers - Increased Sizes */
+/* Section Headers - Professional and Engaging */
 section h2 {
-    font-size: 3.5rem !important;
+    font-size: 2.0rem !important;
     font-weight: 700 !important;
     margin-bottom: 1.5rem !important;
     text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     line-height: 1.2;
+    color: #000000;
 }
 
 #features h2,
 .py-5 h2 {
-    font-size: 4rem !important;
-    font-weight: 800 !important;
-    color: var(--primary-color);
+    font-size: 2.2rem !important;
+    font-weight: 700 !important;
+    color: #000000;
     margin-bottom: 2rem !important;
+    position: relative;
+}
+
+#features h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: var(--health-gradient);
+    border-radius: 2px;
 }
 
 /* Benefits Section Header */
 #benefits h2 {
-    font-size: 3.8rem !important;
-    font-weight: 750 !important;
-    background: var(--health-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 2.6rem !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #000000 !important;
+    background-clip: unset !important;
+    position: relative;
+}
+
+#benefits h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: var(--energy-orange);
+    border-radius: 2px;
 }
 
 /* Testimonials Section Header */
 .bg-light h2 {
-    font-size: 3.6rem !important;
+    font-size: 2.4rem !important;
     font-weight: 700 !important;
-    color: var(--secondary-color);
+    color: #000000;
+}
+
+#testimonials h2 {
+    color: #000000 !important;
+    position: relative;
+}
+
+/* Call to Action Section - Ready to Start Your Wellness Journey */
+.bg-primary {
+    background: var(--health-gradient) !important;
+    position: relative;
+    color: #ffffff !important;
+}
+
+.bg-primary h2,
+.bg-primary p,
+.bg-primary .lead {
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 /* Call to Action Section Header */
 .bg-primary h2 {
-    font-size: 4.2rem !important;
-    font-weight: 800 !important;
+    font-size: 2.2rem !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
     text-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+/* Contact Section - Get In Touch */
+#contact {
+    background: var(--bg-light) !important;
+    position: relative;
+}
+
+#contact h2 {
+    color: #000000 !important;
+}
+
+/* Enhanced visual effects */
+.container {
+    position: relative;
+}
+
+/* Subtle parallax effect for sections */
+#about::before,
+#features::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        rgba(44, 120, 115, 0.02) 0%, 
+        rgba(82, 183, 136, 0.02) 50%, 
+        rgba(69, 123, 157, 0.02) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Enhanced scrolling animation */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.feature-card,
+#testimonials .card {
+    animation: fadeInScale 0.6s ease-out forwards;
+}
+
+.feature-card:nth-child(1) { animation-delay: 0.1s; }
+.feature-card:nth-child(2) { animation-delay: 0.2s; }
+.feature-card:nth-child(3) { animation-delay: 0.3s; }
+.feature-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Contact form enhancements */
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(44, 120, 115, 0.15);
+}
+
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(44, 120, 115, 0.15);
+}
+
+/* Enhanced footer */
+footer {
+    background-color: #f7eed2 !important;
+    position: relative;
+    color: var(--wellness-dark) !important;
+    border-top: 2px solid var(--accent-color);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 -4px 25px rgba(247, 238, 210, 0.3);
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, var(--accent-color), var(--energy-gold));
+}
+
+/* Footer text styling */
+footer h5,
+footer h6,
+footer p,
+footer a {
+    color: var(--wellness-dark) !important;
+}
+
+/* Digital Wellness Platform heading in black */
+footer h5 {
+    color: #000000 !important;
+}
+
+/* Quick Links heading in black */
+footer h6 {
+    color: #000000 !important;
+}
+
+footer a:hover {
+    color: var(--accent-color) !important;
 }
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
+    .welcome-marquee {
+        padding: 12px 0;
+    }
+    
+    .marquee-text {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+    }
+    
     .hero h1 {
         font-size: 2rem;
     }
     
     .hero .lead {
         font-size: 1.1rem;
+    }
+    
+    .nutrition-animation-container {
+        height: 350px;
+        margin-top: 2rem;
+    }
+    
+    .food-item {
+        font-size: 2rem;
+    }
+    
+    .hub-circle {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .hub-icon {
+        font-size: 1.5rem;
+    }
+    
+    .hub-text {
+        font-size: 0.8rem;
+    }
+    
+    .nutrition-stats {
+        flex-direction: column;
+        gap: 8px;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+    }
+    
+    .stat-badge {
+        padding: 8px 12px;
+    }
+    
+    .stat-number {
+        font-size: 1rem;
+    }
+    
+    .stat-label {
+        font-size: 0.6rem;
     }
     
     .floating-card {
@@ -336,5 +1293,327 @@ section h2 {
     
     .stat-item {
         margin-bottom: 1rem;
+    }
+}
+
+/* Enhanced Assessment Portal Styles */
+.assessment-hero {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+}
+
+.step-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.progress-section {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.circular-progress {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1rem;
+}
+
+.circular-progress svg {
+    transform: rotate(-90deg);
+}
+
+.circular-progress .progress-ring {
+    fill: none;
+    stroke: #e9ecef;
+    stroke-width: 8;
+}
+
+.circular-progress .progress-ring.active {
+    stroke: var(--accent-color);
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s ease;
+    stroke-dasharray: 226;
+    stroke-dashoffset: 226;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.step-dots {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.step-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #dee2e6;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.step-dot.active {
+    background: var(--accent-color);
+    transform: scale(1.3);
+    box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.2);
+}
+
+.step-dot.completed {
+    background: #28a745;
+    transform: scale(1.1);
+}
+
+.step-dot.completed::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 8px;
+    font-weight: bold;
+}
+
+.question-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.option-card {
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.option-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s;
+}
+
+.option-card:hover::before {
+    left: 100%;
+}
+
+.option-card:hover {
+    border-color: var(--accent-color);
+    background: #f8f9fa;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+.option-card.selected {
+    border-color: var(--accent-color);
+    background: linear-gradient(135deg, var(--primary-color), #f0f8ff);
+    color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.2);
+}
+
+.option-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 24px;
+    height: 24px;
+    background: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.btn-assessment {
+    background: linear-gradient(135deg, var(--accent-color), #ff6b6b);
+    border: none;
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-assessment::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-assessment:hover::before {
+    left: 100%;
+}
+
+.btn-assessment:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+    color: white;
+}
+
+.motivation-tip {
+    background: linear-gradient(135deg, #fff3cd, #fef7e0);
+    border-left: 4px solid #ffc107;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    position: relative;
+}
+
+.motivation-tip::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ffc107, transparent, #ffc107);
+    border-radius: 10px;
+    z-index: -1;
+    opacity: 0.7;
+}
+
+.form-range {
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to right, #dc3545 0%, #ffc107 50%, #28a745 100%);
+}
+
+.form-range::-webkit-slider-thumb {
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    border: 4px solid white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-range::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+.form-select:focus,
+.form-control:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 107, 0.25);
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    border: none;
+    border-radius: 12px;
+    border-left: 4px solid #28a745;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+    border: none;
+    border-radius: 12px;
+    border-left: 4px solid #17a2b8;
+}
+
+/* Pulse animation for important elements */
+@keyframes assessmentPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.btn-assessment:focus {
+    animation: assessmentPulse 0.5s ease-in-out;
+}
+
+/* Responsive enhancements for assessment */
+@media (max-width: 768px) {
+    .assessment-hero {
+        padding: 2rem 0;
+    }
+    
+    .step-container {
+        padding: 1.5rem;
+        margin: 1rem 0;
+    }
+    
+    .option-card {
+        padding: 0.75rem;
+    }
+    
+    .question-card {
+        padding: 1.5rem;
+    }
+    
+    .circular-progress {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .progress-text {
+        font-size: 1.2rem;
+    }
+    
+    .step-dots {
+        gap: 0.5rem;
+    }
+    
+    .step-dot {
+        width: 10px;
+        height: 10px;
     }
 }

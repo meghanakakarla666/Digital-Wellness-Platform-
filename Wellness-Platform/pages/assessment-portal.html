@@ -6,344 +6,714 @@
     <title>Health Assessment Portal - Digital Wellness Platform</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
+    <style>
+        .assessment-container {
+            background: linear-gradient(135deg, var(--wellness-light) 0%, var(--primary-color) 100%);
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+        
+        .assessment-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+        }
+        
+        .step-indicator {
+            background: linear-gradient(135deg, var(--accent-color), var(--energy-gold));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 0;
+        }
+        
+        .step-counter {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 1rem 0;
+        }
+        
+        .step-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .step-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+        
+        .step-dot.completed {
+            background: #28a745;
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+            margin: 0 auto;
+        }
+        
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.5s ease;
+            stroke: white;
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #007bff;
+            transition: all 0.3s ease;
+        }
+        
+        .question-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .question-title {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white !important;
+            padding: 0.75rem 1rem;
+            margin: -1.25rem -1.25rem 1rem -1.25rem;
+            border-radius: 9px 9px 0 0;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 2px solid #0056b3;
+        }
+        
+        .form-label.fw-bold {
+            background: #ffffff;
+            border: 1px solid #000000;
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            color: #000000 !important;
+            font-weight: bold !important;
+            display: block;
+            border-left: 3px solid #000000;
+        }
+        
+        .option-card {
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            color: #6c757d;
+            position: relative;
+        }
+        
+        .option-card::before {
+            content: "📍 ";
+            font-size: 0.9rem;
+            opacity: 0.6;
+            margin-right: 0.5rem;
+        }
+        
+        .option-card:hover {
+            border-color: #007bff;
+            background: #e3f2fd;
+            color: #495057;
+            transform: translateX(5px);
+            box-shadow: 0 2px 10px rgba(0, 123, 255, 0.15);
+        }
+        
+        .option-card.selected {
+            border-color: #28a745;
+            background: #d4edda;
+            color: #495057;
+            box-shadow: 0 3px 15px rgba(40, 167, 69, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card strong {
+            color: #6c757d !important;
+        }
+        
+        .option-card .small {
+            color: #868e96 !important;
+        }
+        
+        .option-card.selected::before {
+            content: "✅ ";
+        }
+        
+        /* Add more space between questions */
+        .mb-4 {
+            margin-bottom: 2.5rem !important;
+        }
+        
+        .question-spacing {
+            margin-bottom: 3rem !important;
+        }
+        
+        .form-range {
+            background: linear-gradient(to right, #e9ecef 0%, var(--accent-color) 0%);
+        }
+        
+        .btn-assessment {
+            background: linear-gradient(135deg, var(--accent-color), var(--energy-gold));
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-assessment:hover {
+            background: linear-gradient(135deg, var(--trust-brown), var(--accent-color));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 165, 116, 0.4);
+            color: white;
+        }
+        
+        .motivation-tip {
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #2196f3;
+            font-style: italic;
+        }
+        
+        .completion-indicator {
+            text-align: center;
+            color: #000000;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        /* Ensure proper step visibility */
+        .step-content {
+            display: none;
+        }
+        
+        .step-content:first-of-type {
+            display: block;
+        }
+        
+        /* Form validation styling */
+        .field-error {
+            border-left: 4px solid #dc3545 !important;
+            background-color: #fff5f5 !important;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #f7eed2 !important;">
         <div class="container">
             <a class="navbar-brand" href="../index.html">
-                <strong>🏥 Wellness Platform</strong>
+                <strong>🏥 Digital Wellness Platform</strong>
             </a>
             <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="../index.html">← Back to Home</a>
+                <a class="nav-link" href="../index.html" style="color: var(--wellness-dark) !important;">
+                    ← Back to Home
+                </a>
             </div>
         </div>
     </nav>
 
-    <div class="container mt-4 mb-5">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <!-- Progress Indicator -->
-                <div class="mb-4">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h5 class="mb-0">Assessment Progress</h5>
-                        <span class="text-muted">Step <span id="currentStep">1</span> of 5</span>
-                    </div>
-                    <div class="progress progress-custom">
-                        <div class="progress-bar" role="progressbar" style="width: 20%" 
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" id="progressBar">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Assessment Form -->
-                <div class="form-section">
-                    <div class="text-center mb-4">
-                        <h2 class="text-primary">Digital Health Assessment</h2>
-                        <p class="lead">Help us understand your current health status and wellness goals.</p>
-                    </div>
-
-                    <form id="healthAssessmentForm" novalidate>
-                        <!-- Step 1: Basic Health Survey -->
-                        <div class="step-content" id="step1">
-                            <fieldset>
-                                <legend>📋 Daily Health Habits</legend>
-                                
-                                <div class="mb-4">
-                                    <label class="form-label fw-bold">Do you eat breakfast daily?</label>
-                                    <div class="mt-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="breakfast" 
-                                                   id="breakfastYes" value="yes" required>
-                                            <label class="form-check-label" for="breakfastYes">
-                                                ✅ Yes, regularly
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="breakfast" 
-                                                   id="breakfastSometimes" value="sometimes" required>
-                                            <label class="form-check-label" for="breakfastSometimes">
-                                                🔄 Sometimes
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="breakfast" 
-                                                   id="breakfastNo" value="no" required>
-                                            <label class="form-check-label" for="breakfastNo">
-                                                ❌ Rarely/Never
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="healthRating" class="form-label fw-bold">
-                                        Rate your current overall health (1-10)
-                                    </label>
-                                    <input type="range" class="form-range" min="1" max="10" 
-                                           id="healthRating" name="healthRating" value="5" required>
-                                    <div class="d-flex justify-content-between small text-muted">
-                                        <span>Poor (1)</span>
-                                        <span id="ratingValue" class="fw-bold text-primary">5</span>
-                                        <span>Excellent (10)</span>
-                                    </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="form-label fw-bold">
-                                        How important is food in managing your weight/health?
-                                    </label>
-                                    <select class="form-select" name="foodImportance" required>
-                                        <option value="">Choose an option...</option>
-                                        <option value="very-important">Very Important</option>
-                                        <option value="somewhat-important">Somewhat Important</option>
-                                        <option value="not-very-important">Not Very Important</option>
-                                        <option value="not-important">Not Important at All</option>
-                                    </select>
-                                </div>
-                            </fieldset>
-                        </div>
-
-                        <!-- Step 2: Personal Information -->
-                        <div class="step-content" id="step2" style="display: none;">
-                            <fieldset>
-                                <legend>👤 Personal Information</legend>
-                                
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="firstName" class="form-label fw-bold">First Name</label>
-                                        <input type="text" class="form-control" id="firstName" name="firstName" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="lastName" class="form-label fw-bold">Last Name</label>
-                                        <input type="text" class="form-control" id="lastName" name="lastName" required>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-4 mb-3">
-                                        <label for="age" class="form-label fw-bold">Age</label>
-                                        <input type="number" class="form-control" id="age" name="age" min="18" max="120" required>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label for="gender" class="form-label fw-bold">Gender</label>
-                                        <select class="form-select" id="gender" name="gender" required>
-                                            <option value="">Select...</option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label for="height" class="form-label fw-bold">Height (cm)</label>
-                                        <input type="number" class="form-control" id="height" name="height" min="100" max="250" required>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="weight" class="form-label fw-bold">Current Weight (kg)</label>
-                                    <input type="number" class="form-control" id="weight" name="weight" min="30" max="300" step="0.1" required>
-                                </div>
-                            </fieldset>
-                        </div>
-
-                        <!-- Step 3: Lifestyle Assessment -->
-                        <div class="step-content" id="step3" style="display: none;">
-                            <fieldset>
-                                <legend>🏃‍♂️ Lifestyle & Activity</legend>
-                                
-                                <div class="mb-4">
-                                    <label class="form-label fw-bold">How would you describe your activity level?</label>
-                                    <div class="mt-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="activityLevel" value="sedentary" required>
-                                            <label class="form-check-label">
-                                                🪑 Sedentary (little to no exercise)
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="activityLevel" value="light" required>
-                                            <label class="form-check-label">
-                                                🚶‍♂️ Lightly active (light exercise 1-3 days/week)
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="activityLevel" value="moderate" required>
-                                            <label class="form-check-label">
-                                                🏃‍♂️ Moderately active (moderate exercise 3-5 days/week)
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="activityLevel" value="very" required>
-                                            <label class="form-check-label">
-                                                💪 Very active (hard exercise 6-7 days/week)
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="form-label fw-bold">How many hours of sleep do you get per night?</label>
-                                    <select class="form-select" name="sleepHours" required>
-                                        <option value="">Select hours...</option>
-                                        <option value="less-than-5">Less than 5 hours</option>
-                                        <option value="5-6">5-6 hours</option>
-                                        <option value="7-8">7-8 hours</option>
-                                        <option value="more-than-8">More than 8 hours</option>
-                                    </select>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="form-label fw-bold">Do you smoke or use tobacco products?</label>
-                                    <div class="mt-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="smoking" value="never" required>
-                                            <label class="form-check-label">Never</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="smoking" value="former" required>
-                                            <label class="form-check-label">Former smoker</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="smoking" value="current" required>
-                                            <label class="form-check-label">Current smoker</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-
-                        <!-- Step 4: Nutrition Assessment -->
-                        <div class="step-content" id="step4" style="display: none;">
-                            <fieldset>
-                                <legend>🥗 Nutrition Habits</legend>
-                                
-                                <div class="mb-4">
-                                    <label class="form-label fw-bold">How many servings of fruits and vegetables do you eat daily?</label>
-                                    <select class="form-select" name="fruitsVeggies" required>
-                                        <option value="">Select...</option>
-                                        <option value="0-1">0-1 servings</option>
-                                        <option value="2-3">2-3 servings</option>
-                                        <option value="4-5">4-5 servings</option>
-                                        <option value="6-plus">6 or more servings</option>
-                                    </select>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="form-label fw-bold">How often do you drink sugary beverages (soda, juice, etc.)?</label>
-                                    <div class="mt-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sugaryDrinks" value="never" required>
-                                            <label class="form-check-label">Never/Rarely</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sugaryDrinks" value="sometimes" required>
-                                            <label class="form-check-label">1-3 times per week</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sugaryDrinks" value="often" required>
-                                            <label class="form-check-label">4-6 times per week</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sugaryDrinks" value="daily" required>
-                                            <label class="form-check-label">Daily or more</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="form-label fw-bold">How much water do you drink daily?</label>
-                                    <select class="form-select" name="waterIntake" required>
-                                        <option value="">Select...</option>
-                                        <option value="less-than-4">Less than 4 glasses</option>
-                                        <option value="4-6">4-6 glasses</option>
-                                        <option value="7-8">7-8 glasses</option>
-                                        <option value="more-than-8">More than 8 glasses</option>
-                                    </select>
-                                </div>
-                            </fieldset>
-                        </div>
-
-                        <!-- Step 5: Health Goals -->
-                        <div class="step-content" id="step5" style="display: none;">
-                            <fieldset>
-                                <legend>🎯 Health Goals & Interests</legend>
-                                
-                                <div class="mb-4">
-                                    <label class="form-label fw-bold">What are your primary health goals? (Select all that apply)</label>
-                                    <div class="mt-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="healthGoals" value="weight-loss">
-                                            <label class="form-check-label">Weight Loss</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="healthGoals" value="weight-gain">
-                                            <label class="form-check-label">Weight Gain</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="healthGoals" value="muscle-building">
-                                            <label class="form-check-label">Muscle Building</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="healthGoals" value="general-fitness">
-                                            <label class="form-check-label">General Fitness</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="healthGoals" value="disease-prevention">
-                                            <label class="form-check-label">Disease Prevention</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="form-label fw-bold">Are you interested in receiving healthy lifestyle information?</label>
-                                    <div class="mt-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="lifestyleInfo" value="very-interested" required>
-                                            <label class="form-check-label">Very interested</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="lifestyleInfo" value="somewhat-interested" required>
-                                            <label class="form-check-label">Somewhat interested</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="lifestyleInfo" value="not-interested" required>
-                                            <label class="form-check-label">Not interested</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="additionalComments" class="form-label fw-bold">Additional comments or health concerns (optional)</label>
-                                    <textarea class="form-control" id="additionalComments" name="additionalComments" rows="3" placeholder="Share any additional information that might help us provide better recommendations..."></textarea>
-                                </div>
-                            </fieldset>
-                        </div>
-
-                        <!-- Navigation Buttons -->
-                        <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-outline-secondary" id="prevBtn" 
-                                    style="display: none;" onclick="previousStep()">
-                                ← Previous
-                            </button>
-                            <div class="ms-auto">
-                                <button type="button" class="btn btn-health" id="nextBtn" onclick="nextStep()">
-                                    Next Step →
-                                </button>
-                                <button type="submit" class="btn btn-success" id="submitBtn" 
-                                        style="display: none;">
-                                    Complete Assessment ✓
-                                </button>
+    <div class="assessment-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <!-- Assessment Card -->
+                    <div class="assessment-card">
+                        <!-- Progress Header -->
+                        <div class="step-indicator">
+                            <h3 class="mb-1" style="color: #000000 !important;">🏥 Digital Health Assessment</h3>
+                            <p class="mb-2" style="color: #000000 !important;">Your personalized wellness journey starts here</p>
+                            
+                            <!-- Circular Progress -->
+                            <div style="width: 80px; height: 80px; margin: 1rem auto;">
+                                <svg class="progress-ring" width="80" height="80">
+                                    <circle class="progress-ring-track" cx="40" cy="40" r="36" 
+                                            stroke="#ffffff40" stroke-width="4" fill="transparent"/>
+                                    <circle class="progress-ring-circle" cx="40" cy="40" r="36" 
+                                            stroke="white" stroke-width="4" fill="transparent"
+                                            stroke-dasharray="226.19" stroke-dashoffset="180.95" id="progressCircle"/>
+                                    <text x="40" y="45" text-anchor="middle" fill="white" font-size="16" font-weight="bold" transform="rotate(90 40 40)" id="progressText">1/5</text>
+                                </svg>
+                            </div>
+                            
+                            <!-- Step Dots -->
+                            <div class="step-counter">
+                                <div class="step-dot active" id="dot1"></div>
+                                <div class="step-dot" id="dot2"></div>
+                                <div class="step-dot" id="dot3"></div>
+                                <div class="step-dot" id="dot4"></div>
+                                <div class="step-dot" id="dot5"></div>
+                            </div>
+                            
+                            <div class="completion-indicator" id="completionText">
+                                Getting started - this will take about 5 minutes
                             </div>
                         </div>
-                    </form>
-                </div>
 
-                <!-- Quick Save Notice -->
-                <div class="alert alert-info mt-3">
-                    <small>
-                        💾 Your progress is automatically saved. You can return anytime to complete your assessment.
-                    </small>
+                        <!-- Assessment Form -->
+                        <div class="p-4">
+
+                            <form id="healthAssessmentForm" novalidate>
+                                <!-- Step 1: Basic Health Survey -->
+                                <div class="step-content" id="step1" style="display: block;">
+                                    <div class="question-card">
+                                        <div class="question-title">📋 Daily Health Habits Assessment</div>
+                                        <p class="text-muted mb-4 text-center">Let's start with some basic questions about your daily routine</p>
+                                        
+                                        <div class="question-spacing">
+                                            <label class="form-label fw-bold mb-3">❓ QUESTION 1: Do you eat breakfast daily?</label>
+                                            <div class="mt-2">
+                                                <div class="option-card" onclick="selectOption('breakfast', 'yes', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="breakfast" 
+                                                           id="breakfastYes" value="yes" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">✅</span>
+                                                        <div>
+                                                            <strong>Yes, regularly</strong>
+                                                            <div class="small text-muted">I have breakfast most days of the week</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="selectOption('breakfast', 'sometimes', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="breakfast" 
+                                                           id="breakfastSometimes" value="sometimes" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">🔄</span>
+                                                        <div>
+                                                            <strong>Sometimes</strong>
+                                                            <div class="small text-muted">I eat breakfast a few times a week</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="selectOption('breakfast', 'no', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="breakfast" 
+                                                           id="breakfastNo" value="no" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">❌</span>
+                                                        <div>
+                                                            <strong>Rarely/Never</strong>
+                                                            <div class="small text-muted">I usually skip breakfast</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="question-spacing">
+                                            <label for="healthRating" class="form-label fw-bold mb-3">
+                                                ❓ QUESTION 2: Rate your current overall health (1-10)
+                                            </label>
+                                            <input type="range" class="form-range" min="1" max="10" 
+                                                   id="healthRating" name="healthRating" value="5" required 
+                                                   oninput="updateHealthRatingValue(this.value)">
+                                            <div class="text-center mt-2 mb-2">
+                                                <span class="badge bg-primary fs-6" id="healthRatingValue">5</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between small text-muted">
+                                                <span>Poor (1)</span>
+                                                <span>Excellent (10)</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="question-spacing">
+                                            <label class="form-label fw-bold mb-3">
+                                                ❓ QUESTION 3: How important is food in managing your weight/health?
+                                            </label>
+                                            <select class="form-select form-select-lg" name="foodImportance" required>
+                                                <option value="">Choose an option...</option>
+                                                <option value="very-important">🌟 Very Important - It's a key priority</option>
+                                                <option value="somewhat-important">🔸 Somewhat Important - I'm moderately aware</option>
+                                                <option value="not-very-important">🔹 Not Very Important - I don't think about it much</option>
+                                                <option value="not-important">⚪ Not Important at All - I don't see the connection</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="motivation-tip">
+                                            <strong>💡 Did you know?</strong> People who eat breakfast regularly have better energy levels and find it easier to maintain a healthy weight!
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2: Personal Information -->
+                                <div class="step-content" id="step2" style="display: none;">
+                                    <div class="question-card">
+                                        <div class="question-title">👤 Personal Information Section</div>
+                                        <p class="text-muted mb-4 text-center">We'll use this information to provide personalized recommendations</p>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <input type="text" class="form-control form-control-lg" id="firstName" name="firstName" required placeholder="First Name">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <input type="text" class="form-control form-control-lg" id="lastName" name="lastName" required placeholder="Last Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <input type="number" class="form-control form-control-lg" id="age" name="age" min="18" max="120" required placeholder="Age">
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <select class="form-select form-select-lg" id="gender" name="gender" required>
+                                                    <option value="">Gender</option>
+                                                    <option value="male">👨 Male</option>
+                                                    <option value="female">👩 Female</option>
+                                                    <option value="other">🏳️‍⚧️ Other</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <input type="number" class="form-control form-control-lg" id="height" name="height" min="100" max="250" required placeholder="Height (cm)">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <input type="number" class="form-control form-control-lg" id="weight" name="weight" min="30" max="300" step="0.1" required placeholder="Current Weight (kg)">
+                                        </div>
+                                        
+                                        <div class="alert alert-info">
+                                            <i class="fas fa-info-circle me-2"></i>
+                                            <strong>Privacy Notice:</strong> Your personal information is encrypted and never shared with third parties.
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- Step 3: Lifestyle Assessment -->
+                                <div class="step-content" id="step3" style="display: none;">
+                                    <div class="question-card">
+                                        <div class="question-title">🏃‍♂️ Lifestyle & Activity Assessment</div>
+                                        <p class="text-muted mb-4 text-center">Tell us about your daily activity and lifestyle habits</p>
+                                        
+                                        <div class="question-spacing">
+                                            <label class="form-label fw-bold mb-3">❓ QUESTION 1: How would you describe your activity level?</label>
+                                            <div class="mt-2">
+                                                <div class="option-card" onclick="selectOption('activityLevel', 'sedentary', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="activityLevel" value="sedentary" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">🪑</span>
+                                                        <div>
+                                                            <strong>Sedentary</strong>
+                                                            <div class="small text-muted">Little to no exercise, mostly sitting</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="selectOption('activityLevel', 'light', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="activityLevel" value="light" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">🚶‍♂️</span>
+                                                        <div>
+                                                            <strong>Lightly Active</strong>
+                                                            <div class="small text-muted">Light exercise 1-3 days per week</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="selectOption('activityLevel', 'moderate', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="activityLevel" value="moderate" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">🏃‍♂️</span>
+                                                        <div>
+                                                            <strong>Moderately Active</strong>
+                                                            <div class="small text-muted">Moderate exercise 3-5 days per week</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="selectOption('activityLevel', 'very', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="activityLevel" value="very" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">💪</span>
+                                                        <div>
+                                                            <strong>Very Active</strong>
+                                                            <div class="small text-muted">Hard exercise 6-7 days per week</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold mb-3">How many hours of sleep do you get per night?</label>
+                                            <select class="form-select form-select-lg" name="sleepHours" required>
+                                                <option value="">Select hours...</option>
+                                                <option value="less-than-5">😴 Less than 5 hours</option>
+                                                <option value="5-6">😪 5-6 hours</option>
+                                                <option value="7-8">😊 7-8 hours (Recommended)</option>
+                                                <option value="more-than-8">😴 More than 8 hours</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold mb-3">Do you smoke or use tobacco products?</label>
+                                            <div class="mt-2">
+                                                <div class="option-card" onclick="selectOption('smoking', 'never', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="smoking" value="never" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">🚭</span>
+                                                        <div>
+                                                            <strong>Never</strong>
+                                                            <div class="small text-muted">I have never smoked</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="selectOption('smoking', 'former', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="smoking" value="former" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">🎯</span>
+                                                        <div>
+                                                            <strong>Former Smoker</strong>
+                                                            <div class="small text-muted">I used to smoke but quit</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="selectOption('smoking', 'current', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="smoking" value="current" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">🚬</span>
+                                                        <div>
+                                                            <strong>Current Smoker</strong>
+                                                            <div class="small text-muted">I currently smoke or use tobacco</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="motivation-tip">
+                                            <strong>💡 Health Tip:</strong> Getting 7-8 hours of quality sleep and regular physical activity are two of the most important factors for good health!
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Step 4: Nutrition Assessment -->
+                                <div class="step-content" id="step4" style="display: none;">
+                                    <div class="question-card">
+                                        <h4 class="mb-3">🥗 Nutrition Habits</h4>
+                                        <p class="text-muted mb-4">Let's understand your eating patterns and nutritional habits</p>
+                                        
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold mb-3">How many servings of fruits and vegetables do you eat daily?</label>
+                                            <select class="form-select form-select-lg" name="fruitsVeggies" required>
+                                                <option value="">Select...</option>
+                                                <option value="0-1">🔴 0-1 servings (Need improvement)</option>
+                                                <option value="2-3">🟡 2-3 servings (Getting there)</option>
+                                                <option value="4-5">🟢 4-5 servings (Good!)</option>
+                                                <option value="6-plus">⭐ 6 or more servings (Excellent!)</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold mb-3">How often do you drink sugary beverages (soda, juice, etc.)?</label>
+                                            <div class="mt-2">
+                                                <div class="option-card" onclick="selectOption('sugaryDrinks', 'never', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="sugaryDrinks" value="never" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">💚</span>
+                                                        <div>
+                                                            <strong>Never/Rarely</strong>
+                                                            <div class="small text-muted">I avoid sugary drinks</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="selectOption('sugaryDrinks', 'sometimes', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="sugaryDrinks" value="sometimes" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">🟡</span>
+                                                        <div>
+                                                            <strong>1-3 times per week</strong>
+                                                            <div class="small text-muted">Occasional treat</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="selectOption('sugaryDrinks', 'often', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="sugaryDrinks" value="often" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">🟠</span>
+                                                        <div>
+                                                            <strong>4-6 times per week</strong>
+                                                            <div class="small text-muted">Regular consumption</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="selectOption('sugaryDrinks', 'daily', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="sugaryDrinks" value="daily" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">🔴</span>
+                                                        <div>
+                                                            <strong>Daily or more</strong>
+                                                            <div class="small text-muted">Daily habit</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold mb-3">How much water do you drink daily?</label>
+                                            <select class="form-select form-select-lg" name="waterIntake" required>
+                                                <option value="">Select...</option>
+                                                <option value="less-than-4">💧 Less than 4 glasses</option>
+                                                <option value="4-6">💧💧 4-6 glasses</option>
+                                                <option value="7-8">💧💧💧 7-8 glasses (Recommended)</option>
+                                                <option value="more-than-8">💧💧💧💧 More than 8 glasses</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="motivation-tip">
+                                            <strong>🍎 Nutrition Fact:</strong> Eating 5-9 servings of fruits and vegetables daily can reduce your risk of chronic diseases by up to 20%!
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Step 5: Health Goals -->
+                                <div class="step-content" id="step5" style="display: none;">
+                                    <div class="question-card">
+                                        <h4 class="mb-3">🎯 Health Goals & Interests</h4>
+                                        <p class="text-muted mb-4">Finally, let's set up your personalized wellness plan</p>
+                                        
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold mb-3">What are your primary health goals? (Select all that apply)</label>
+                                            <div class="mt-2">
+                                                <div class="option-card" onclick="toggleCheckbox('weight-loss', this)">
+                                                    <input class="form-check-input d-none" type="checkbox" name="healthGoals" value="weight-loss" id="goal-weight-loss" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">⚖️</span>
+                                                        <div>
+                                                            <strong>Weight Loss</strong>
+                                                            <div class="small text-muted">Reduce body weight healthily</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="toggleCheckbox('weight-gain', this)">
+                                                    <input class="form-check-input d-none" type="checkbox" name="healthGoals" value="weight-gain" id="goal-weight-gain">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">📈</span>
+                                                        <div>
+                                                            <strong>Weight Gain</strong>
+                                                            <div class="small text-muted">Gain healthy weight or muscle</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="toggleCheckbox('muscle-building', this)">
+                                                    <input class="form-check-input d-none" type="checkbox" name="healthGoals" value="muscle-building" id="goal-muscle">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">💪</span>
+                                                        <div>
+                                                            <strong>Muscle Building</strong>
+                                                            <div class="small text-muted">Build strength and muscle mass</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="toggleCheckbox('general-fitness', this)">
+                                                    <input class="form-check-input d-none" type="checkbox" name="healthGoals" value="general-fitness" id="goal-fitness">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">🏃‍♂️</span>
+                                                        <div>
+                                                            <strong>General Fitness</strong>
+                                                            <div class="small text-muted">Improve overall fitness level</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="toggleCheckbox('disease-prevention', this)">
+                                                    <input class="form-check-input d-none" type="checkbox" name="healthGoals" value="disease-prevention" id="goal-prevention">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">🛡️</span>
+                                                        <div>
+                                                            <strong>Disease Prevention</strong>
+                                                            <div class="small text-muted">Prevent chronic diseases</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold mb-3">Are you interested in receiving healthy lifestyle information?</label>
+                                            <div class="mt-2">
+                                                <div class="option-card" onclick="selectOption('lifestyleInfo', 'very-interested', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="lifestyleInfo" value="very-interested" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">🌟</span>
+                                                        <div>
+                                                            <strong>Very Interested</strong>
+                                                            <div class="small text-muted">Send me tips, recipes, and updates</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="selectOption('lifestyleInfo', 'somewhat-interested', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="lifestyleInfo" value="somewhat-interested" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">👍</span>
+                                                        <div>
+                                                            <strong>Somewhat Interested</strong>
+                                                            <div class="small text-muted">Occasional updates would be nice</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="option-card" onclick="selectOption('lifestyleInfo', 'not-interested', this)">
+                                                    <input class="form-check-input d-none" type="radio" name="lifestyleInfo" value="not-interested" required>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-3 fs-4">📵</span>
+                                                        <div>
+                                                            <strong>Not Interested</strong>
+                                                            <div class="small text-muted">Just the assessment results, please</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label for="additionalComments" class="form-label fw-bold mb-3">Additional comments or health concerns (optional)</label>
+                                            <textarea class="form-control form-control-lg" id="additionalComments" name="additionalComments" rows="4" placeholder="Share any additional information that might help us provide better recommendations..."></textarea>
+                                        </div>
+                                        
+                                        <div class="alert alert-success">
+                                            <strong>🎉 Almost Done!</strong> You're about to receive your personalized wellness recommendations based on your responses.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Navigation Buttons -->
+                                <div class="d-flex justify-content-between mt-4 p-3 bg-light rounded">
+                                    <button type="button" class="btn btn-outline-secondary btn-lg" id="prevBtn" 
+                                            style="display: none;" onclick="previousStep()">
+                                        ← Previous Step
+                                    </button>
+                                    <div class="ms-auto">
+                                        <button type="button" class="btn btn-assessment btn-lg" id="nextBtn" onclick="nextStep()">
+                                            Continue →
+                                        </button>
+                                        <button type="submit" class="btn btn-success btn-lg" id="submitBtn" 
+                                                style="display: none;">
+                                            🎉 Complete Assessment
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Quick Save Notice -->
+                    <div class="alert alert-success mt-3 text-center">
+                        <i class="fas fa-save me-2"></i>
+                        <strong>Auto-Save Enabled</strong> - Your progress is automatically saved. You can return anytime to complete your assessment.
+                    </div>
                 </div>
             </div>
         </div>
@@ -352,9 +722,404 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/form-validation.js"></script>
     <script>
-        // Update health rating display
-        document.getElementById('healthRating').addEventListener('input', function() {
-            document.getElementById('ratingValue').textContent = this.value;
+        // Assessment management class
+        class HealthAssessment {
+            constructor() {
+                this.currentStep = 1;
+                this.totalSteps = 5;
+                this.formData = {};
+                this.init();
+            }
+
+            init() {
+                // Clear any existing saved data for fresh start
+                this.clearAllFormData();
+                // Always start from step 1 - don't load saved data for fresh start
+                this.showStep(1);
+                this.updateProgressUI();
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                const form = document.getElementById('healthAssessmentForm');
+                if (form) {
+                    form.addEventListener('submit', (e) => this.handleSubmit(e));
+                }
+            }
+
+            clearAllFormData() {
+                // Clear localStorage
+                localStorage.removeItem('wellnessAssessment');
+                localStorage.removeItem('wellnessResults');
+                
+                // Reset form data
+                this.formData = {};
+                
+                // Clear all form fields
+                const form = document.getElementById('healthAssessmentForm');
+                if (form) {
+                    // Reset all inputs
+                    const inputs = form.querySelectorAll('input, select, textarea');
+                    inputs.forEach(input => {
+                        if (input.type === 'radio' || input.type === 'checkbox') {
+                            input.checked = false;
+                        } else {
+                            input.value = '';
+                        }
+                        
+                        // Remove selected styling from option cards
+                        const optionCard = input.closest('.option-card');
+                        if (optionCard) {
+                            optionCard.classList.remove('selected');
+                        }
+                    });
+                    
+                    // Reset range sliders to default values
+                    const rangeInputs = form.querySelectorAll('input[type="range"]');
+                    rangeInputs.forEach(range => {
+                        const defaultValue = range.getAttribute('value') || '5';
+                        range.value = defaultValue;
+                    });
+                }
+            }
+
+            nextStep() {
+                if (this.validateCurrentStep()) {
+                    this.saveCurrentStepData();
+                    
+                    if (this.currentStep < this.totalSteps) {
+                        this.currentStep++;
+                        this.showStep(this.currentStep);
+                        this.updateProgressUI();
+                    }
+                } else {
+                    this.showValidationErrors();
+                }
+            }
+
+            previousStep() {
+                if (this.currentStep > 1) {
+                    this.currentStep--;
+                    this.showStep(this.currentStep);
+                    this.updateProgressUI();
+                }
+            }
+
+            showStep(stepNumber) {
+                // Hide all steps
+                document.querySelectorAll('.step-content').forEach(step => {
+                    step.style.display = 'none';
+                });
+
+                // Show current step
+                const currentStep = document.getElementById(`step${stepNumber}`);
+                if (currentStep) {
+                    currentStep.style.display = 'block';
+                }
+
+                // Smooth scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            validateCurrentStep() {
+                const currentStepElement = document.getElementById(`step${this.currentStep}`);
+                const requiredFields = currentStepElement.querySelectorAll('[required]');
+                let isValid = true;
+
+                requiredFields.forEach(field => {
+                    if (!this.validateField(field)) {
+                        isValid = false;
+                    }
+                });
+
+                return isValid;
+            }
+
+            validateField(field) {
+                let value = '';
+                
+                if (field.type === 'radio') {
+                    const checked = document.querySelector(`[name="${field.name}"]:checked`);
+                    value = checked ? checked.value : '';
+                } else if (field.type === 'checkbox') {
+                    // For checkboxes, check if at least one is selected for health goals
+                    if (field.name === 'healthGoals') {
+                        const checkedBoxes = document.querySelectorAll(`[name="${field.name}"]:checked`);
+                        value = checkedBoxes.length > 0 ? 'selected' : '';
+                    } else {
+                        value = field.checked ? field.value : '';
+                    }
+                } else {
+                    value = field.value.trim();
+                }
+
+                if (!value) {
+                    this.showFieldError(field);
+                    return false;
+                }
+
+                this.clearFieldError(field);
+                return true;
+            }
+
+            showFieldError(field) {
+                // Add error styling to the field's container
+                const container = field.closest('.question-card') || field.closest('.mb-4');
+                if (container) {
+                    container.style.borderLeft = '4px solid #dc3545';
+                    container.style.backgroundColor = '#fff5f5';
+                }
+            }
+
+            clearFieldError(field) {
+                const container = field.closest('.question-card') || field.closest('.mb-4');
+                if (container) {
+                    container.style.borderLeft = '';
+                    container.style.backgroundColor = '';
+                }
+            }
+
+            showValidationErrors() {
+                const alert = document.createElement('div');
+                alert.className = 'alert alert-danger alert-dismissible fade show';
+                alert.innerHTML = `
+                    <strong>⚠️ Please complete all required fields before continuing.</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" onclick="this.parentElement.remove()"></button>
+                `;
+                
+                const stepContent = document.getElementById(`step${this.currentStep}`);
+                stepContent.insertBefore(alert, stepContent.firstChild);
+
+                // Auto-dismiss after 5 seconds
+                setTimeout(() => {
+                    if (alert && alert.parentElement) {
+                        alert.remove();
+                    }
+                }, 5000);
+            }
+
+            saveCurrentStepData() {
+                const currentStepElement = document.getElementById(`step${this.currentStep}`);
+                const inputs = currentStepElement.querySelectorAll('input, select, textarea');
+                
+                inputs.forEach(input => {
+                    if (input.type === 'radio' && input.checked) {
+                        this.formData[input.name] = input.value;
+                    } else if (input.type === 'checkbox' && input.checked) {
+                        if (!this.formData[input.name]) {
+                            this.formData[input.name] = [];
+                        }
+                        if (Array.isArray(this.formData[input.name])) {
+                            this.formData[input.name].push(input.value);
+                        }
+                    } else if (input.type !== 'radio' && input.type !== 'checkbox') {
+                        this.formData[input.name] = input.value;
+                    }
+                });
+            }
+
+            updateProgressUI() {
+                const percentage = (this.currentStep / this.totalSteps) * 100;
+                const circumference = 2 * Math.PI * 36; // radius = 36
+                const offset = circumference - (percentage / 100) * circumference;
+                
+                // Update circular progress
+                const circle = document.getElementById('progressCircle');
+                const text = document.getElementById('progressText');
+                if (circle && text) {
+                    circle.style.strokeDashoffset = offset;
+                    text.textContent = `${this.currentStep}/${this.totalSteps}`;
+                }
+                
+                // Update dots
+                for (let i = 1; i <= this.totalSteps; i++) {
+                    const dot = document.getElementById(`dot${i}`);
+                    if (dot) {
+                        dot.classList.remove('active', 'completed');
+                        if (i < this.currentStep) {
+                            dot.classList.add('completed');
+                        } else if (i === this.currentStep) {
+                            dot.classList.add('active');
+                        }
+                    }
+                }
+                
+                // Update completion text
+                const completionText = document.getElementById('completionText');
+                if (completionText) {
+                    const messages = [
+                        "Getting started - this will take about 5 minutes",
+                        "Great start! Let's get to know you better",
+                        "Halfway through! You're doing great",
+                        "Almost there! Just a few more questions",
+                        "Final step! Let's wrap this up"
+                    ];
+                    completionText.textContent = messages[this.currentStep - 1] || messages[0];
+                }
+
+                // Update navigation buttons
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                const submitBtn = document.getElementById('submitBtn');
+
+                if (prevBtn) {
+                    prevBtn.style.display = this.currentStep > 1 ? 'block' : 'none';
+                }
+
+                if (nextBtn && submitBtn) {
+                    if (this.currentStep === this.totalSteps) {
+                        nextBtn.style.display = 'none';
+                        submitBtn.style.display = 'block';
+                    } else {
+                        nextBtn.style.display = 'block';
+                        submitBtn.style.display = 'none';
+                    }
+                }
+            }
+
+            handleSubmit(e) {
+                e.preventDefault();
+                
+                if (this.validateCurrentStep()) {
+                    this.saveCurrentStepData();
+                    this.completeAssessment();
+                }
+            }
+
+            completeAssessment() {
+                // Calculate basic health score
+                const results = this.calculateHealthResults();
+                
+                // Save results
+                localStorage.setItem('wellnessResults', JSON.stringify(results));
+                
+                // Show success message and redirect
+                this.showSuccessMessage();
+                
+                // Redirect after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'results-dashboard.html';
+                }, 2000);
+            }
+
+            calculateHealthResults() {
+                const data = this.formData;
+                let healthScore = 0;
+                let recommendations = [];
+
+                // Breakfast habits
+                if (data.breakfast === 'yes') healthScore += 20;
+                else if (data.breakfast === 'sometimes') healthScore += 10;
+                else recommendations.push('Consider establishing a regular breakfast routine');
+
+                // Health rating
+                if (data.healthRating) {
+                    healthScore += parseInt(data.healthRating) * 3;
+                }
+
+                // Activity level
+                if (data.activityLevel === 'very') healthScore += 25;
+                else if (data.activityLevel === 'moderate') healthScore += 20;
+                else if (data.activityLevel === 'light') healthScore += 10;
+                else recommendations.push('Consider increasing physical activity');
+
+                // BMI calculation
+                let bmi = null;
+                if (data.weight && data.height) {
+                    const heightM = data.height / 100;
+                    bmi = (data.weight / (heightM * heightM)).toFixed(1);
+                }
+
+                return {
+                    healthScore: Math.min(healthScore, 100),
+                    bmi,
+                    recommendations,
+                    completedAt: new Date().toISOString(),
+                    formData: data
+                };
+            }
+
+            showSuccessMessage() {
+                const alert = document.createElement('div');
+                alert.className = 'alert alert-success text-center';
+                alert.innerHTML = `
+                    <h4>🎉 Assessment Complete!</h4>
+                    <p>Thank you for completing your health assessment. Redirecting to your results...</p>
+                    <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                `;
+                
+                const form = document.getElementById('healthAssessmentForm');
+                form.innerHTML = '';
+                form.appendChild(alert);
+            }
+        }
+
+        // Enhanced interactivity functions
+        function selectOption(name, value, element) {
+            // Remove selected class from all options in this group
+            document.querySelectorAll(`input[name="${name}"]`).forEach(input => {
+                input.closest('.option-card').classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            element.classList.add('selected');
+            
+            // Set the radio button as checked
+            const radioButton = element.querySelector('input[type="radio"]');
+            if (radioButton) {
+                radioButton.checked = true;
+            }
+        }
+
+        // Handle checkbox toggle for health goals
+        function toggleCheckbox(value, element) {
+            const checkbox = element.querySelector('input[type="checkbox"]');
+            
+            if (checkbox.checked) {
+                checkbox.checked = false;
+                element.classList.remove('selected');
+            } else {
+                checkbox.checked = true;
+                element.classList.add('selected');
+            }
+        }
+
+        // Update health rating display value
+        function updateHealthRatingValue(value) {
+            const display = document.getElementById('healthRatingValue');
+            if (display) {
+                display.textContent = value;
+                
+                // Change color based on value for better visual feedback
+                display.className = 'badge fs-6 ';
+                if (value <= 3) {
+                    display.className += 'bg-danger';
+                } else if (value <= 6) {
+                    display.className += 'bg-warning';
+                } else {
+                    display.className += 'bg-success';
+                }
+            }
+        }
+
+        // Global navigation functions
+        function nextStep() {
+            if (window.assessmentInstance) {
+                window.assessmentInstance.nextStep();
+            }
+        }
+
+        function previousStep() {
+            if (window.assessmentInstance) {
+                window.assessmentInstance.previousStep();
+            }
+        }
+
+        // Initialize assessment when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            window.assessmentInstance = new HealthAssessment();
         });
     </script>
 </body>

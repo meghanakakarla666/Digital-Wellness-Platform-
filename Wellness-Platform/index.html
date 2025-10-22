@@ -10,10 +10,10 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#" aria-label="Wellness Platform Home">
-                <strong>🏥 Wellness Platform</strong>
+                <strong>🏥 Digital Wellness Platform</strong>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -21,21 +21,29 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#features">Features</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#testimonials">Testimonials</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-health ms-2" href="pages/assessment-portal.html">Start Assessment</a>
+                        <a class="nav-link" href="#contact">Contact Us</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- Home Section (Hero) -->
+    <section id="home" class="home-section">
+        <!-- Hero Section -->
+        <div class="hero">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
@@ -51,21 +59,139 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
+                    <div class="nutrition-animation-container">
+                        <!-- Animated Nutrition Scene -->
+                        <div class="nutrition-scene">
+                            <!-- Background Gradient -->
+                            <div class="scene-background"></div>
+                            
+                            <!-- Floating Vegetables and Fruits -->
+                            <div class="floating-foods">
+                                <div class="food-item" data-food="🥬">🥬</div>
+                                <div class="food-item" data-food="🥕">🥕</div>
+                                <div class="food-item" data-food="🥒">🥒</div>
+                                <div class="food-item" data-food="🍅">🍅</div>
+                                <div class="food-item" data-food="🫐">🫐</div>
+                                <div class="food-item" data-food="🥦">🥦</div>
+                                <div class="food-item" data-food="🥑">🥑</div>
+                                <div class="food-item" data-food="🌽">�</div>
+                                <div class="food-item" data-food="🍊">🍊</div>
+                                <div class="food-item" data-food="🥭">�</div>
+                            </div>
+                            
+                            <!-- Central Wellness Hub -->
+                            <div class="wellness-hub">
+                                <div class="hub-circle">
+                                    <div class="hub-icon">🌱</div>
+                                    <div class="hub-text">Nutrition</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Nutrition Stats Overlay -->
+                            <div class="nutrition-stats">
+                                <div class="stat-badge">
+                                    <span class="stat-number">500+</span>
+                                    <span class="stat-label">Healthy Recipes</span>
+                                </div>
+                                <div class="stat-badge">
+                                    <span class="stat-number">95%</span>
+                                    <span class="stat-label">Natural Ingredients</span>
+                                </div>
+                                <div class="stat-badge">
+                                    <span class="stat-number">24/7</span>
+                                    <span class="stat-label">Nutrition Support</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="display-4 mb-4">About Our Platform</h2>
+                    <p class="lead mb-4">Revolutionizing digital health through smart wellness assessments and personalized guidance.</p>
+                    <p class="mb-4">Transform your health journey with interactive evaluations and evidence-based recommendations tailored to your unique needs.</p>
+                    
+                    <div class="row g-4 mb-4">
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="bg-primary bg-opacity-10 rounded-3 p-3">
+                                        <i class="text-primary" style="font-size: 1.5rem;">🏥</i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-1">Evidence-Based</h6>
+                                    <p class="mb-0 text-muted">Scientific research meets practical health solutions</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="bg-success bg-opacity-10 rounded-3 p-3">
+                                        <i class="text-success" style="font-size: 1.5rem;">🔒</i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-1">Secure & Private</h6>
+                                    <p class="mb-0 text-muted">Your data protected with enterprise-level security</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="bg-warning bg-opacity-10 rounded-3 p-3">
+                                        <i class="text-warning" style="font-size: 1.5rem;">📊</i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-1">Data-Driven</h6>
+                                    <p class="mb-0 text-muted">Personalized insights for your unique health profile</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="bg-info bg-opacity-10 rounded-3 p-3">
+                                        <i class="text-info" style="font-size: 1.5rem;">🎯</i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-1">Goal-Oriented</h6>
+                                    <p class="mb-0 text-muted">Actionable recommendations for your wellness goals</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
                     <div class="text-center">
-                        <div class="bg-white rounded-3 p-4 shadow-lg d-inline-block">
-                            <h3 class="text-primary mb-3">Health at a Glance</h3>
-                            <div class="row text-center">
-                                <div class="col-4">
-                                    <h4 class="text-success">BMI</h4>
-                                    <p class="mb-0">Calculate</p>
+                        <div class="bg-light rounded-4 p-5">
+                            <div class="row text-center g-4">
+                                <div class="col-6">
+                                    <div class="stat-number text-primary display-4 fw-bold">10K+</div>
+                                    <div class="stat-label text-muted">Active Users</div>
                                 </div>
-                                <div class="col-4">
-                                    <h4 class="text-info">Nutrition</h4>
-                                    <p class="mb-0">Analyze</p>
+                                <div class="col-6">
+                                    <div class="stat-number text-success display-4 fw-bold">500K+</div>
+                                    <div class="stat-label text-muted">Assessments Completed</div>
                                 </div>
-                                <div class="col-4">
-                                    <h4 class="text-warning">Progress</h4>
-                                    <p class="mb-0">Track</p>
+                                <div class="col-6">
+                                    <div class="stat-number text-warning display-4 fw-bold">98%</div>
+                                    <div class="stat-label text-muted">User Satisfaction</div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-number text-info display-4 fw-bold">24/7</div>
+                                    <div class="stat-label text-muted">Platform Availability</div>
                                 </div>
                             </div>
                         </div>
@@ -194,7 +320,7 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section class="py-5 bg-light">
+    <section id="testimonials" class="py-5 bg-light">
         <div class="container">
             <div class="text-center mb-5">
                 <h2>What Users Say</h2>
@@ -245,7 +371,7 @@
         <div class="container">
             <div class="text-center">
                 <h2>Ready to Start Your Wellness Journey?</h2>
-                <p class="lead mb-4">Join thousands of users who have transformed their health with our platform.</p>
+                <p class="lead mb-4" style="color: #a0522d !important;">Join thousands of users who have transformed their health with our platform.</p>
                 <a href="pages/assessment-portal.html" class="btn btn-light btn-lg">
                     🚀 Start Your Assessment Today
                 </a>
@@ -253,23 +379,141 @@
         </div>
     </section>
 
+    <!-- Contact Section -->
+    <section id="contact" class="py-5" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2>Get In Touch</h2>
+                <p class="lead text-muted">Have questions about your wellness journey? We're here to help!</p>
+            </div>
+            
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <div class="h-100">
+                        <h4 class="mb-4">Contact Information</h4>
+                        <div class="contact-info">
+                            <div class="contact-item mb-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="contact-icon bg-primary bg-opacity-10 rounded-3 p-3 me-3">
+                                        <i class="text-primary" style="font-size: 1.25rem;">📧</i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Email Support</h6>
+                                        <p class="mb-0 text-muted">support@wellnessplatform.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item mb-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="contact-icon bg-success bg-opacity-10 rounded-3 p-3 me-3">
+                                        <i class="text-success" style="font-size: 1.25rem;">📞</i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Phone Support</h6>
+                                        <p class="mb-0 text-muted">1-800-WELLNESS (1-800-935-5637)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item mb-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="contact-icon bg-info bg-opacity-10 rounded-3 p-3 me-3">
+                                        <i class="text-info" style="font-size: 1.25rem;">⏰</i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Support Hours</h6>
+                                        <p class="mb-0 text-muted">Monday - Friday: 9AM - 6PM EST</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="d-flex align-items-center">
+                                    <div class="contact-icon bg-warning bg-opacity-10 rounded-3 p-3 me-3">
+                                        <i class="text-warning" style="font-size: 1.25rem;">🌐</i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Online Resources</h6>
+                                        <p class="mb-0 text-muted">
+                                            <a href="pages/resources-hub.html" class="text-decoration-none">Visit our Resource Hub</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="card shadow-lg" style="background-color: #ffffff !important; border: 1px solid #dee2e6;">
+                        <div class="card-body p-4" style="background-color: #ffffff !important;">
+                            <h4 class="mb-4">Send us a Message</h4>
+                            <form id="contactForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="firstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstName" name="firstName" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName" name="lastName" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="subject" class="form-label">Subject</label>
+                                    <select class="form-select" id="subject" name="subject" required>
+                                        <option value="">Choose a topic...</option>
+                                        <option value="general">General Inquiry</option>
+                                        <option value="technical">Technical Support</option>
+                                        <option value="billing">Billing Question</option>
+                                        <option value="feedback">Feedback</option>
+                                        <option value="partnership">Partnership Opportunity</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="message" class="form-label">Message (Optional)</label>
+                                    <textarea class="form-control" id="message" name="message" rows="4" 
+                                              placeholder="Tell us how we can help you..."></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-health w-100">
+                                    Send Message 📤
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="py-4 bg-dark text-light">
+    <footer class="py-4">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <h5>Digital Wellness Platform</h5>
                     <p class="mb-3">Empowering healthier lives through comprehensive wellness assessments and personalized recommendations.</p>
                 </div>
-                <div class="col-md-6">
-                    <h6>Quick Links</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="pages/assessment-portal.html" class="text-light text-decoration-none">Health Assessment</a></li>
-                        <li><a href="pages/results-dashboard.html" class="text-light text-decoration-none">Dashboard</a></li>
-                        <li><a href="pages/nutrition-planner.html" class="text-light text-decoration-none">Nutrition Planner</a></li>
-                        <li><a href="pages/progress-tracker.html" class="text-light text-decoration-none">Progress Tracker</a></li>
-                        <li><a href="pages/resources-hub.html" class="text-light text-decoration-none">Resources Hub</a></li>
-                    </ul>
+                <div class="col-md-8 text-md-end">
+                    <div class="d-inline-block text-start ms-md-5">
+                        <h6>Quick Links</h6>
+                        <ul class="list-unstyled">
+                            <li><a href="pages/assessment-portal.html" class="text-decoration-none">Health Assessment</a></li>
+                            <li><a href="pages/results-dashboard.html" class="text-decoration-none">Dashboard</a></li>
+                            <li><a href="pages/nutrition-planner.html" class="text-decoration-none">Nutrition Planner</a></li>
+                            <li><a href="pages/progress-tracker.html" class="text-decoration-none">Progress Tracker</a></li>
+                            <li><a href="pages/resources-hub.html" class="text-decoration-none">Resources Hub</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <hr class="my-4">
@@ -282,5 +526,98 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/achievement-system.js"></script>
     <script src="js/app.js"></script>
+    
+    <script>
+        // Contact form handling
+        document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Simple validation (message is now optional)
+            if (!data.firstName || !data.lastName || !data.email || !data.subject) {
+                showMessage('Please fill in all required fields.', 'danger');
+                return;
+            }
+            
+            // Simulate form submission
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = 'Sending... ⏳';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                showMessageBelowButton(this, 'Message sent successfully! We\'ll get back to you within 24 hours.', 'success');
+                this.reset();
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+
+        // Function to show styled messages below the submit button
+        function showMessageBelowButton(form, message, type) {
+            // Remove any existing alert in the form
+            const existingAlert = form.querySelector('.alert-message');
+            if (existingAlert) {
+                existingAlert.remove();
+            }
+            
+            // Create new alert
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show alert-message mt-3`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            
+            // Add below the submit button
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.parentNode.insertBefore(alertDiv, submitBtn.nextSibling);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (alertDiv && alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+
+        // Function to show error messages below the submit button
+        function showMessage(message, type) {
+            const form = document.getElementById('contactForm');
+            showMessageBelowButton(form, message, type);
+        }
+        
+        // Smooth scrolling for navigation links with fixed header offset
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 150; // Increased offset to ensure complete heading visibility
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
 </html>
