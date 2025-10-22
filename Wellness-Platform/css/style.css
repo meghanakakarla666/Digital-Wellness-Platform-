@@ -186,7 +186,7 @@ section[id] {
 }
 
 #benefits .col-lg-4 > div:hover h4 {
-    color: var(--trust-brown) !important;
+    color: var(--primary-color);
 }
 
 #benefits .col-lg-4 > div p {
@@ -241,10 +241,6 @@ section[id] {
 
 #benefits .benefit-card:hover::before {
     opacity: 1;
-}
-
-#benefits .benefit-card:hover h4 {
-    color: var(--trust-brown) !important;
 }
 
 /* Icon circle hover effects */
