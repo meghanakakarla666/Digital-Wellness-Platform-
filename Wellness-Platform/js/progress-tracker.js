@@ -143,9 +143,8 @@ class ProgressTracker {
         const weight = parseFloat(formData.weight);
         const bmi = weight / ((height / 100) * (height / 100));
         
-        // Convert health rating to wellness score (1-10 to 0-100)
-        const healthRating = parseFloat(formData.healthRating);
-        const wellnessScore = (healthRating / 10) * 100;
+        // Use Dashboard health score calculation (matches Dashboard exactly)
+        const wellnessScore = this.calculateDashboardHealthScore(formData);
         
         // Calculate estimated calories based on weight, height, age, gender, activity
         const age = parseFloat(formData.age);
@@ -429,95 +428,116 @@ class ProgressTracker {
                 const assessment = JSON.parse(wellnessAssessment);
                 const formData = assessment.formData;
                 
-                console.log('Full assessment data for wellness score:', formData);
+                // Use the exact same health score calculation as Dashboard
+                const dashboardHealthScore = this.calculateDashboardHealthScore(formData);
                 
-                // Calculate comprehensive wellness score from multiple factors
-                let totalScore = 0;
-                let factors = 0;
-                
-                // Health rating (self-assessment) - 25% weight
-                if (formData.healthRating) {
-                    totalScore += (parseFloat(formData.healthRating) / 10) * 25;
-                    factors++;
-                }
-                
-                // Sleep quality - 20% weight
-                let sleepScore = 0;
-                if (formData.sleepHours === 'less-than-5') sleepScore = 3;
-                else if (formData.sleepHours === '5-6') sleepScore = 6;
-                else if (formData.sleepHours === '6-7') sleepScore = 8;
-                else if (formData.sleepHours === '7-8') sleepScore = 10;
-                else if (formData.sleepHours === '8-9') sleepScore = 9;
-                else if (formData.sleepHours === 'more-than-8') sleepScore = 7;
-                totalScore += (sleepScore / 10) * 20;
-                
-                // Activity level - 20% weight
-                let activityScore = 0;
-                if (formData.activityLevel === 'sedentary') activityScore = 2;
-                else if (formData.activityLevel === 'light') activityScore = 4;
-                else if (formData.activityLevel === 'moderate') activityScore = 6;
-                else if (formData.activityLevel === 'active') activityScore = 8;
-                else if (formData.activityLevel === 'very') activityScore = 10;
-                totalScore += (activityScore / 10) * 20;
-                
-                // Nutrition factors - 15% weight
-                let nutritionScore = 5; // base score
-                if (formData.fruitsVeggies === '6-plus') nutritionScore += 2;
-                else if (formData.fruitsVeggies === '4-5') nutritionScore += 1;
-                if (formData.breakfast === 'yes') nutritionScore += 1;
-                if (formData.sugaryDrinks === 'never') nutritionScore += 1;
-                if (formData.waterIntake === 'more-than-8') nutritionScore += 1;
-                totalScore += (nutritionScore / 10) * 15;
-                
-                // Lifestyle factors - 10% weight
-                let lifestyleScore = 5;
-                if (formData.smoking === 'never') lifestyleScore += 3;
-                else if (formData.smoking === 'former') lifestyleScore += 1;
-                if (formData.lifestyleInfo === 'very-interested') lifestyleScore += 2;
-                else if (formData.lifestyleInfo === 'interested') lifestyleScore += 1;
-                totalScore += (lifestyleScore / 10) * 10;
-                
-                // BMI factor - 10% weight
-                const height = parseFloat(formData.height);
-                const weight = parseFloat(formData.weight);
-                const bmi = weight / ((height / 100) * (height / 100));
-                let bmiScore = 5;
-                if (bmi >= 18.5 && bmi < 25) bmiScore = 10;
-                else if (bmi >= 25 && bmi < 30) bmiScore = 7;
-                else if (bmi >= 30) bmiScore = 4;
-                else if (bmi < 18.5) bmiScore = 6;
-                totalScore += (bmiScore / 10) * 10;
-                
-                const wellnessScore = Math.round(totalScore);
-                
-                console.log('Comprehensive wellness score calculation:', {
-                    healthRating: formData.healthRating,
-                    sleepScore: sleepScore,
-                    activityScore: activityScore,
-                    nutritionScore: nutritionScore,
-                    lifestyleScore: lifestyleScore,
-                    bmiScore: bmiScore,
-                    totalScore: wellnessScore
-                });
+                console.log('Using Dashboard health score calculation:', dashboardHealthScore);
+                console.log('Assessment data:', formData);
                 
                 // Update the displayed stats
                 const overallScoreElement = document.getElementById('overallScore');
                 if (overallScoreElement) {
-                    overallScoreElement.textContent = wellnessScore;
-                    console.log('Updated comprehensive wellness score to:', wellnessScore);
+                    overallScoreElement.textContent = dashboardHealthScore;
+                    console.log('Updated overall score to match Dashboard:', dashboardHealthScore);
                 }
                 
                 // Update trend indicator
                 const trendElement = document.getElementById('overallTrend');
                 if (trendElement) {
-                    trendElement.textContent = `Comprehensive Health Score`;
+                    trendElement.textContent = `Health Score: ${dashboardHealthScore}/100`;
                     trendElement.className = 'trend-change trend-stable mt-2';
                 }
                 
             } catch (e) {
-                console.error('Error calculating comprehensive wellness score:', e);
+                console.error('Error calculating Dashboard health score:', e);
             }
         }
+    }
+
+    // Add the exact same health score calculation method as Dashboard
+    calculateDashboardHealthScore(formData) {
+        let score = 0;
+        const maxScore = 100;
+
+        // Breakfast habits (15 points)
+        if (formData.breakfast === 'yes') score += 15;
+        else if (formData.breakfast === 'sometimes') score += 8;
+
+        // Self-rated health (25 points)
+        if (formData.healthRating) {
+            score += (parseInt(formData.healthRating) / 10) * 25;
+        }
+
+        // Activity level (20 points)
+        const activityMultipliers = {
+            sedentary: { score: 1 },
+            light: { score: 2 },
+            moderate: { score: 3 },
+            very: { score: 4 }
+        };
+        
+        if (formData.activityLevel) {
+            const activity = activityMultipliers[formData.activityLevel];
+            score += activity ? (activity.score / 4) * 20 : 0;
+        }
+
+        // Sleep (15 points)
+        if (formData.sleepHours) {
+            const sleepScore = {
+                'less-than-5': 3,
+                '5-6': 8,
+                '7-8': 15,
+                'more-than-8': 12
+            };
+            score += sleepScore[formData.sleepHours] || 0;
+        }
+
+        // Smoking (10 points)
+        if (formData.smoking === 'never') score += 10;
+        else if (formData.smoking === 'former') score += 7;
+
+        // Nutrition habits (15 points)
+        if (formData.fruitsVeggies) {
+            const nutritionScore = {
+                '0-1': 2,
+                '2-3': 6,
+                '4-5': 12,
+                '6-plus': 15
+            };
+            score += nutritionScore[formData.fruitsVeggies] || 0;
+        }
+
+        console.log('Dashboard health score breakdown:', {
+            breakfast: formData.breakfast === 'yes' ? 15 : (formData.breakfast === 'sometimes' ? 8 : 0),
+            healthRating: formData.healthRating ? (parseInt(formData.healthRating) / 10) * 25 : 0,
+            activity: formData.activityLevel ? (activityMultipliers[formData.activityLevel]?.score / 4) * 20 : 0,
+            sleep: formData.sleepHours ? (this.getSleepPoints(formData.sleepHours)) : 0,
+            smoking: formData.smoking === 'never' ? 10 : (formData.smoking === 'former' ? 7 : 0),
+            nutrition: this.getNutritionPoints(formData.fruitsVeggies),
+            total: score
+        });
+
+        return Math.min(maxScore, Math.round(score));
+    }
+
+    getSleepPoints(sleepHours) {
+        const sleepScore = {
+            'less-than-5': 3,
+            '5-6': 8,
+            '7-8': 15,
+            'more-than-8': 12
+        };
+        return sleepScore[sleepHours] || 0;
+    }
+
+    getNutritionPoints(fruitsVeggies) {
+        const nutritionScore = {
+            '0-1': 2,
+            '2-3': 6,
+            '4-5': 12,
+            '6-plus': 15
+        };
+        return nutritionScore[fruitsVeggies] || 0;
     }
 
     getFilteredData(timeRange) {
