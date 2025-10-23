@@ -78,19 +78,66 @@ class WellnessDashboard {
                 return;
             }
 
-            console.log('Both results and assessment data found, parsing...');
-            const results = JSON.parse(resultsData);
-            const assessment = JSON.parse(assessmentData);
-            const formData = assessment.formData;
+            // Parse available data robustly. Prefer wellnessAssessment.formData, fall back to wellnessResults.formData
+            console.log('Parsing stored results and assessment data...');
+
+            let results = null;
+            let formData = null;
+
+            try {
+                if (resultsData) results = JSON.parse(resultsData);
+            } catch (err) {
+                console.warn('Failed to parse wellnessResults:', err);
+                results = null;
+            }
+
+            try {
+                if (assessmentData) {
+                    const assessment = JSON.parse(assessmentData);
+                    formData = assessment.formData || null;
+                }
+            } catch (err) {
+                console.warn('Failed to parse wellnessAssessment:', err);
+                formData = null;
+            }
+
+            // If we don't have assessment formData, try to get it from results (older saves)
+            if (!formData && results && results.formData) {
+                formData = results.formData;
+            }
+
+            // If we have formData but no results, calculate and persist results
+            if (!results && formData) {
+                console.log('Found formData without results, calculating metrics...');
+                const healthMetrics = this.calculateAllMetrics(formData);
+                results = {
+                    healthScore: healthMetrics.healthScore,
+                    bmi: healthMetrics.bmi,
+                    recommendations: healthMetrics.recommendations,
+                    completedAt: new Date().toISOString(),
+                    formData: formData
+                };
+                try {
+                    localStorage.setItem('wellnessResults', JSON.stringify(results));
+                } catch (err) {
+                    console.warn('Failed to save wellnessResults:', err);
+                }
+            }
+
+            if (!formData) {
+                console.log('No form data available after parsing, showing no data message');
+                this.showNoDataMessage();
+                return;
+            }
 
             console.log('Calculating health metrics...');
             // Calculate comprehensive health metrics
             const healthMetrics = this.calculateAllMetrics(formData);
-            
+
             console.log('Updating dashboard...');
             // Update dashboard
             this.updateDashboard(healthMetrics, formData);
-            
+
             console.log('Creating charts...');
             // Create charts
             this.createCharts(healthMetrics, formData);

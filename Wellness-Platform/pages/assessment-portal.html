@@ -992,6 +992,18 @@
                 
                 // Save results
                 localStorage.setItem('wellnessResults', JSON.stringify(results));
+
+                // Also save the raw assessment so the dashboard can re-calculate or display form data
+                try {
+                    const assessmentPayload = {
+                        formData: this.formData,
+                        currentStep: this.currentStep,
+                        timestamp: new Date().toISOString()
+                    };
+                    localStorage.setItem('wellnessAssessment', JSON.stringify(assessmentPayload));
+                } catch (err) {
+                    console.warn('Failed to save wellnessAssessment:', err);
+                }
                 
                 // Show success message and redirect
                 this.showSuccessMessage();
