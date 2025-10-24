@@ -194,6 +194,35 @@
     }
 }
 
+/* Tablet breakpoint: improve grid stacking */
+@media (max-width: 992px) {
+    .metric-card {
+        flex: 0 0 48%;
+        max-width: 48%;
+        margin-bottom: 1rem;
+    }
+
+    .recommendation-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+@media (max-width: 768px) {
+    .metric-card {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .recommendation-item {
+        padding: 0.75rem;
+    }
+
+    .card-header h5 {
+        font-size: 1rem;
+    }
+}
+
 /* Print styles */
 @media print {
     .no-print,

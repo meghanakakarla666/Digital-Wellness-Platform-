@@ -171,3 +171,51 @@
         height: 250px;
     }
 }
+
+/* Tablet and mobile responsiveness for dashboard layout */
+@media (max-width: 992px) {
+    /* Stack metric cards into two columns on tablets */
+    .metric-card {
+        flex: 0 0 48%;
+        max-width: 48%;
+        margin-bottom: 1rem;
+    }
+
+    .metric-card:nth-child(odd) {
+        margin-right: 4%;
+    }
+
+    /* Make recommendation items wrap */
+    .recommendation-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .recommendation-icon {
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Full width metric cards on mobile */
+    .metric-card {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    /* Reduce chart height and make charts responsive */
+    .chart-container {
+        height: 220px;
+    }
+
+    /* Buttons that are presented as tall action tiles should stack */
+    .btn.h-100 {
+        min-height: auto;
+        width: 100%;
+    }
+
+    /* Compress padding inside cards for small screens */
+    .card-body {
+        padding: 0.75rem;
+    }
+}
