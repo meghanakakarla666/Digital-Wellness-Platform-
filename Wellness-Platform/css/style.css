@@ -1292,6 +1292,98 @@ footer a:hover {
     }
 }
 
+/* Tablet breakpoint (medium screens) - stack columns, make cards flexible */
+@media (max-width: 992px) {
+    /* Stack hero columns vertically and center text */
+    .hero .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero .col-lg-6 {
+        max-width: 100%;
+        flex: 0 0 100%;
+        width: 100%;
+    }
+
+    /* Slightly reduce the animation container height on tablets */
+    .nutrition-animation-container {
+        height: 420px;
+        margin-top: 1.5rem;
+    }
+
+    /* Benefits: show two columns on tablet */
+    #benefits .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    #benefits .col-lg-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    /* Make feature cards auto height and stack nicely */
+    .feature-card {
+        height: auto !important;
+    }
+
+    /* Assessment / containers: center and constrain width */
+    .assessment-container .col-lg-8 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* Footer quick links: center on tablets */
+    footer .text-md-end {
+        text-align: center !important;
+    }
+
+    footer .d-inline-block {
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+/* Improve stacking/spacing on small screens beyond existing mobile rules */
+@media (max-width: 768px) {
+    /* Make feature/feature cards single column */
+    .col-lg-6, .col-lg-4 {
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+
+    /* Benefit cards should be auto height on small screens */
+    #benefits .col-lg-4 > div,
+    #benefits .benefit-card {
+        height: auto !important;
+        padding: 1.25rem !important;
+    }
+
+    /* Reduce hero padding for small screens */
+    .hero {
+        padding: 60px 0;
+    }
+
+    /* Make navigation collapse behavior friendlier */
+    .navbar-nav .nav-link {
+        padding: 0.4rem 0.75rem;
+        display: block;
+        text-align: center;
+    }
+
+    /* Make footer links stacked */
+    footer ul.list-unstyled {
+        padding-left: 0;
+    }
+
+    footer ul.list-unstyled li {
+        margin-bottom: 0.5rem;
+    }
+}
+
 /* Enhanced Assessment Portal Styles */
 .assessment-hero {
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
