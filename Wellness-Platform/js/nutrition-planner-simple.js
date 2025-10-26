@@ -165,10 +165,17 @@ class SimpleNutritionPlanner {
                 plugins: {
                     legend: {
                         position: 'bottom',
-                        labels: { padding: 15, usePointStyle: true }
+                        labels: { 
+                            padding: 10, 
+                            usePointStyle: true,
+                            font: { size: 11 }
+                        }
                     }
                 },
-                cutout: '70%'
+                cutout: '65%',
+                layout: {
+                    padding: 5
+                }
             }
         });
     }

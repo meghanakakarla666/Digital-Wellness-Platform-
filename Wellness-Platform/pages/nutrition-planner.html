@@ -24,12 +24,12 @@
         </div>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-3">
         <!-- Welcome Header -->
-        <div class="welcome-section mb-5">
+        <div class="welcome-section mb-4">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h1 class="display-4 text-primary">🍎 Nutrition Made Simple</h1>
+                    <h1 class="display-5 text-primary">🍎 Nutrition Made Simple</h1>
                     <p class="lead">Track your daily meals and reach your health goals effortlessly</p>
                 </div>
                 <div class="col-md-4 text-end">
@@ -42,7 +42,7 @@
         </div>
 
         <!-- Quick Stats -->
-        <div class="quick-stats-row mb-4">
+        <div class="quick-stats-row mb-3">
             <div class="row g-3">
                 <div class="col-6 col-md-3">
                     <div class="stat-card calories">
@@ -62,7 +62,7 @@
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="stat-card carbs">
-                        <div class="stat-icon">�</div>
+                        <div class="stat-icon">🌾</div>
                         <div class="stat-number" id="totalCarbs">0</div>
                         <div class="stat-label">Carbs</div>
                         <div class="stat-goal">/ <span id="carbGoal">250</span>g</div>
@@ -162,7 +162,9 @@
                 <!-- Progress Chart -->
                 <div class="progress-card mb-4">
                     <h5 class="mb-3">📊 Daily Progress</h5>
-                    <canvas id="nutritionProgress" width="300" height="200"></canvas>
+                    <div class="chart-container" style="position: relative; height: 250px;">
+                        <canvas id="nutritionProgress"></canvas>
+                    </div>
                 </div>
 
                 <!-- Today's Tips -->
@@ -186,6 +188,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Add some bottom spacing -->
+    <div style="height: 50px;"></div>
 
     <!-- Food Search Modal -->
     <div class="modal fade" id="foodSearchModal" tabindex="-1">

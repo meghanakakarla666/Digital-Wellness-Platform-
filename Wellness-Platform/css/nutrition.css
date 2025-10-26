@@ -2,11 +2,11 @@
 
 /* Welcome Section */
 .welcome-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 3rem;
+    background: linear-gradient(135deg,  var(--secondary-color));
+    color: rgb(0, 0, 0);
+    padding: 2rem;
     border-radius: 20px;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .welcome-section h1 {
@@ -33,7 +33,7 @@
 .score-number {
     font-size: 3rem;
     font-weight: 700;
-    color: white;
+    color: rgb(5, 1, 254);
     line-height: 1;
 }
 
@@ -99,7 +99,7 @@
 /* Meals Container */
 .meals-container {
     background: white;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
@@ -216,6 +216,27 @@
     padding: 1.5rem;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Chart Container */
+.chart-container {
+    max-height: 250px;
+    overflow: hidden;
+}
+
+.chart-container canvas {
+    max-height: 100% !important;
+}
+
+/* Nutrition page specific body adjustments */
+body {
+    overflow-x: hidden;
+    min-height: auto;
+}
+
+/* Prevent excessive height */
+.container {
+    max-width: 100%;
 }
 
 .progress-card h5, .tips-card h5 {
@@ -379,23 +400,30 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
     .welcome-section {
-        padding: 2rem;
+        padding: 1.5rem;
         text-align: center;
+        margin-bottom: 1rem;
     }
     
     .welcome-section h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     .meals-container {
-        padding: 1.5rem;
+        padding: 1rem;
     }
     
     .simple-meal-card {
         flex-direction: column;
         gap: 1rem;
         align-items: stretch;
+        padding: 1rem;
     }
     
     .add-food-btn {
@@ -404,6 +432,15 @@
     
     .meal-title {
         justify-content: space-between;
+    }
+    
+    .progress-card, .tips-card {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .chart-container {
+        height: 200px !important;
     }
 }
 
