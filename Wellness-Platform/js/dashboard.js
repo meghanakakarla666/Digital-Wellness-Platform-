@@ -6,7 +6,7 @@ class WellnessDashboard {
     }
 
     init() {
-        // Check if DOM is already loaded
+        // Check if DOM is already loaded.
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
                 this.loadResults();
